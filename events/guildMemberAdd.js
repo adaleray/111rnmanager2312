@@ -2,6 +2,7 @@ module.exports.event = async (uye, client = global.client, cfg = require("../con
   
   let yasakliTag = db.get(`yasakliTag_${uye.guild.id}`) || [];
   let yasakliTagRol = db.get(`yasakliTagRol_${uye.guild.id}`) || "";
+  let zaman = uye.user.createdAt.getTime();
   
   if (yasakliTag.includes(uye.user.username.split(""))) {
     if (yasakliTagRol === "") {
@@ -16,7 +17,6 @@ module.exports.event = async (uye, client = global.client, cfg = require("../con
       if (uye.roles.cache.get(cfg.roles.unregister)) uye.roles.remove(cfg.roles.unregister).catch(err => console.log(err.message));
     };
   };
-  
   
 };
 
