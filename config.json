@@ -2,6 +2,7 @@
   "sunucu": "772142910216863744",
   "prefix": ".",
   "qwe": "NzMxNjU5MTE3MTc2ODE1NjU3.XwpQpw.oYD5BNdDgpsQHNfuz2WPETmbJ34",
+  "sahipler": ["676918044668330005"],
   
   "roles": {
     "unregister": "772177057933164605",
@@ -10,13 +11,16 @@
     "yasaklıTagRol": "",
     "fakeRol": "",
     "jail": "",
-    "muted": ""
+    "muted": "",
+    "muteH": "",
+    "jailH": "",
+    "tagRol": ""
   },
   
   "tag": {
     "taglıTag": "",
     "tagsızTag": "",
-    "tagRol": ""
+    "yasakliTaglar": ""
   },
   
   "chats": {

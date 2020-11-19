@@ -1,8 +1,10 @@
 module.exports.event = async (uye, client = global.client, cfg = require("../config.json"), db = require("quick.db")) => {
   const yasakliTag = db.get(`yasakliTag_${uye.guild.id}`) || {};
+  
   let yasakliTagRol = yasakliTag.rol || cfg.roles.yasaklıTagRol;
-  let yasaklitag = yasakliTag.taglar || [];
+  let yasaklitag = yasakliTag.taglar || cfg.tag.yasakliTaglar;
   let fakeRol = db.get(`fakeRol_${uye.guild.id}`) || cfg.roles.fakeRol;
+  
   let tag = cfg.tag.tagsızTag === "" ?  cfg.tag.taglıTag : cfg.tag.tagsızTag;
   
   let zaman = (new Date().getTime() - uye.user.createdAt.getTime());
