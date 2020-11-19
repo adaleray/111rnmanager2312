@@ -63,7 +63,7 @@ module.exports.execute = async ({client, msg, author, args, db, cfg}) => {
         await db.push(`yasakliTag_${msg.guild.id}`, x);
         arr.push(x);
       });
-      msg.channel.send(arr.join(" "));
+      msg.channel.send(`**Başarıyla** \`\`[${arr.join(" , ")}]\`\` **tag(lar)ı yasaklı taga atıldı.\n**`);
     } else {
       var arr = [];
       await taglar.forEach(async (x) => {
