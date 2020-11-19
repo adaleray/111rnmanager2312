@@ -32,7 +32,8 @@ module.exports.execute = async ({client, msg, author, args, db, cfg}) => {
               }
             }).then(msj => msj.delete({ timeout: 5000 }));
           } else {
-             m.edit("Komut iptal edildi.").then(m => m.delete({ timeout: 4000 }));
+             await m.delete();
+             await msg.channel.send("**Komut iptal edildi.**").then(m => m.delete({ timeout: 5000 }));
           };
         });
       });
@@ -55,25 +56,25 @@ module.exports.execute = async ({client, msg, author, args, db, cfg}) => {
     };
   } else if (type === "tag-ekle") {
     let taglar = args.slice(1).join("").split("");
-    var arr = []
+    var arr = [];
     if (db.get(`yasakliTag_${msg.guild.id}`)) {
-      taglar.forEach(async (x, arr = []) => {
+      var arr = [];
+      await taglar.forEach(async (x) => {
         await db.push(`yasakliTag_${msg.guild.id}`, x);
         arr.push(x);
       });
-      
       msg.channel.send(arr.join(" "));
     } else {
-      await taglar.forEach(async (x, arr = []) => {
+      var arr = [];
+      await taglar.forEach(async (x) => {
          arr.push(x);
        });
       await db.set(`yasakliTag_${msg.guild.id}`, arr);
-      msg.channel.send(arr.join(" "));
+      msg.channel.send(client.nrmlembed(`**Başarıyla** \`\`[${arr.join(" , ")}]\`\` **tag(lar)ı yasaklı taga atıldı.**`));
     };
   } else if (type === "tag-sil") {
-      
+      db.delete(`yasakliTag_${msg.guild.id}`);
   };
-  
 };
 
 module.exports.help = {
