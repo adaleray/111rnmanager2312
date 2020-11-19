@@ -1,5 +1,9 @@
-module.exports.execute = ({ msg, client, args, cfg }) => {
-  return;
+module.exports.execute = ({author, msg, args}) => {
+  if (!author.permissions.has("ADMINISTRATOR")) return;
+  let yazi = args.join(" ");
+  if (!yazi) return;
+  msg.delete();
+  msg.channel.send(yazi, { disableMentions: "everyone" });
 };
 
 module.exports.help = {
