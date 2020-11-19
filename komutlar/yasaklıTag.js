@@ -79,7 +79,9 @@ module.exports.execute = async ({client, msg, author, args, db, cfg}) => {
     await db.get(`yasakliTag_${msg.guild.id}`).map(x => arr.push(x));
     await taglar.forEach(tag => {
       if (!arr.includes(tag)) return msg.channel.send(tag + " tagı zaten yasaklıda değil.");
+      
     });
+    
     await db.set(`yasakliTag_${msg.guild.id}`, arr2);
     msg.channel.send(client.nrmlembed(`**Başarıyla** \`\`[${taglar.join(" , ")}]\`\` **tag(lar)ı yasaklı tagdan çıkarıldı.**\n\n__**Şuan Yasaklıda Olan Taglar: **__(\`${db.get(`yasakliTag_${msg.guild.id}`).join(", ") || "Yasaklı Tag Yok !"}\`)`));
   };
