@@ -1,9 +1,10 @@
 module.exports.event = async (uye, client = global.client, cfg = require("../config.json"), db = require("quick.db")) => {
   
-  let yasakliTag = db.get(`yasakliTag_${uye.guild.id}`) || [];
+  let yasakliTag = db.get(`yasakliTag_${uye.guild.id}`) || {};
   let yasakliTagRol = db.get(`yasakliTagRol_${uye.guild.id}`) || "";
   let fakeRol = db.get(`fakeRol_${uye.guild.id}`) || "";
   let isimYas = db.get(`isimYas_${uye.guild.id}`) || "kapalı";
+  let tag = cfg.tag.tagsızTag === "" ?  cfg.tag.taglıTag : cfg.tag.tagsızTag;
   
   let zaman = (new Date().getTime() - uye.user.createdAt.getTime());
 
@@ -21,6 +22,8 @@ module.exports.event = async (uye, client = global.client, cfg = require("../con
     };
   };
   
+  
+  
   if (zaman < client.getDate(1, "hafta")) {
     if (fakeRol === "") {
      await uye.roles.add(cfg.roles.unregister).catch();
@@ -37,10 +40,10 @@ module.exports.event = async (uye, client = global.client, cfg = require("../con
     };
   } else {
     await uye.roles.add(cfg.roles.unregister);
+    await uye.setNickname(`${tag} İsim | yaş`);
     await uye.guild.channels.cache.get(cfg.chats.kayıtChat).send(
       `text`
     ).catch();
-    
   };
 };
 
