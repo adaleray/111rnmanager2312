@@ -1,6 +1,9 @@
-module.exports = ({client, cfg, fs, db}) => {
+const cfg = require("../config.json");
+const { Client } = require("discord.js");
+const fs = require("fs"), db = require("quick.db");
+const client = new Client();
+module.exports.event = (msg) => {
   
-  client.on("message", async (msg) => {
     if (msg.content.includes("discord.gg") && !author.permissions.has("MANAGE_ROLES")) return msg.guild.members.ban(msg.author, { days: 7, reason: "oc"});
     let prefixMention = new RegExp(`^<@!${client.user.id}>`);
     let pref = msg.content.match(prefixMention) ? msg.content.match(prefixMention)[0] : cfg.prefix.toLowerCase();
@@ -19,7 +22,6 @@ module.exports = ({client, cfg, fs, db}) => {
     if (cmd) {
       cmd.operate({client: client, msg: msg, args: args, author: author, uye: uye, db: db, fs: fs, cfg: cfg});
     };
-  });
   
 };
 

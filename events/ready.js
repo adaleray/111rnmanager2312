@@ -1,10 +1,9 @@
-module.exports.event = ({client}) => {
+const { Client } = require("discord.js");
+const client = new Client();
+module.exports.event = () => {
   
-  client.on("ready", () => {
-    console.log(client.user.username);
-    client.user.setStatus("idle");
-  });
-  
+  console.log(client.user.id);
+  client.user.setStatus("idle");
 };
 
 module.exports.help = { name: "ready" };
