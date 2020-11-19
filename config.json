@@ -4,16 +4,17 @@
   "qwe": "NzMxNjU5MTE3MTc2ODE1NjU3.XwpQpw.oYD5BNdDgpsQHNfuz2WPETmbJ34",
   
   "roles": {
-    "unregister": "",
+    "unregister": "772177057933164605",
     "erkek": [],
     "kız": []
   },
   
   "chats": {
     "gchat": "",
-    "kayıtChat": "",
+    "kayıtChat": "772176948470218813",
     "banLog": "",
     "jailLog": "",
-    "muteLog": ""
+    "muteLog": "",
+    "uyariLog": ""
   }
 }
