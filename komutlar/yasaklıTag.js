@@ -63,7 +63,7 @@ module.exports.execute = async ({client, msg, author, args, db, cfg}) => {
         await db.push(`yasakliTag_${msg.guild.id}`, x);
         arr.push(x);
       });
-      msg.channel.send(`**Başarıyla** \`\`[${arr.join(" , ")}]\`\` **tag(lar)ı yasaklı taga atıldı.\n**`);
+      msg.channel.send(client.nrmlembed(`**Başarıyla** \`\`[${arr.join(" , ")}]\`\` **tag(lar)ı yasaklı taga atıldı.**\n\n__**Şuan Yasaklıda Olan Taglar:**__(\`${db.get(`yasakliTag_${msg.guild.id}`).join(", ")}\`)`));
     } else {
       var arr = [];
       await taglar.forEach(async (x) => {
@@ -73,7 +73,13 @@ module.exports.execute = async ({client, msg, author, args, db, cfg}) => {
       msg.channel.send(client.nrmlembed(`**Başarıyla** \`\`[${arr.join(" , ")}]\`\` **tag(lar)ı yasaklı taga atıldı.**`));
     };
   } else if (type === "tag-sil") {
-      db.delete(`yasakliTag_${msg.guild.id}`);
+    var arr = [];
+    var taglar = args.slice(1).join("").split("");
+    await db.get(`yasakliTag_${msg.guild.id}`).map(x => arr.push(x));
+    taglar.forEach(tag => {
+      arr.push(arr.filter(a => !taglar));
+    });
+    await console.log("")
   };
 };
 
