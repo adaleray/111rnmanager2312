@@ -9,10 +9,8 @@ client.aliases = new Map();
 client.events = new Map();
 
 require("./data/functions.js")({client: client, cfg: cfg});
-require("../data/eventLoader.js")({fs: fs, client: client});
-
-
-
+require("./data/load.js")({fs: fs, client: client});
+console.log(require("./data/commandHandler.js"));
 /*
 fs.readdir("./komutlar/", (err, files, komutlar = []) => {
   console.log("Komutlar Yükleniyor.");

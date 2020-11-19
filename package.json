@@ -1,7 +1,7 @@
 {
-  "main": "index.js",
+  "main": "LONA.js",
   "scripts": {
-    "start": "node index.js"
+    "start": "node LONA.js"
   },
   "dependencies": {
     "discord.js": "^12.4.1",
