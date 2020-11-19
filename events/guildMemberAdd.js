@@ -2,8 +2,9 @@ module.exports.event = async (uye, client = global.client, cfg = require("../con
   
   let yasakliTag = db.get(`yasakliTag_${uye.guild.id}`) || [];
   let yasakliTagRol = db.get(`yasakliTagRol_${uye.guild.id}`) || "";
-  let zaman = uye.user.createdAt.getTime();
-  
+  let fakeRol = db.get(`fakeRol_${uye.guild.id}`) || "";
+  let zaman = (new Date().getTime() - uye.user.createdAt.getTime());
+
   if (yasakliTag.includes(uye.user.username.split(""))) {
     if (yasakliTagRol === "") {
       await uye.roles.add(cfg.roles.unregister); 
@@ -18,6 +19,11 @@ module.exports.event = async (uye, client = global.client, cfg = require("../con
     };
   };
   
+  if (zaman < client.getDate(1, "hafta")) {
+    if (fakeRol === "") return;
+  } else {
+    
+  };
 };
 
 module.exports.help = { name: "guildMemberAdd" };
