@@ -8,7 +8,9 @@
     "erkek": [],
     "kız": [],
     "yasaklıTagRol": "",
-    "fakeRol": ""
+    "fakeRol": "",
+    "jail": "",
+    "muted": ""
   },
   
   "tag": {

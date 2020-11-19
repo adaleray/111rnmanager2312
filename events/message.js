@@ -13,10 +13,10 @@ module.exports.event = (msg, client = global.client, cfg = require("../config.js
     cmd = client.commands.get(command);
   } else if (client.aliases.has(command)) {
     cmd = client.commands.get(client.aliases.get(command));
-  }
+  };
   if (cmd) {
     cmd.execute({ client: client, msg: msg, args: args, author: author, uye: uye, cfg: cfg });
-  }
+  };
 };
 
 module.exports.help = { name: "message" };

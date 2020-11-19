@@ -10,15 +10,15 @@ module.exports = (client, cfg) => {
         }
       }
     };
-};
+  };
   
-  client.toFlat =  Object.defineProperty(Array.prototype, "flat", {
+  client.toFlat = Object.defineProperty(Array.prototype, "flat", {
      value: (depth = 1) => {
        return Array.prototype.reduce((flat, toFlatten) => {
          return flat.concat(Array.isArray(toFlatten) && depth > 1 ? toFlatten.flat(depth - 1) : toFlatten);
        }, []);
      }
-   });
+  });
   
   client.checkPermissions = (msg, type, perm, message, timeout) => {
     timeout = Number(timeout);
