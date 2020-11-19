@@ -74,12 +74,14 @@ module.exports.execute = async ({client, msg, author, args, db, cfg}) => {
     };
   } else if (type === "tag-sil") {
     var arr = [];
+    var arr2;
     var taglar = args.slice(1).join("").split("");
     await db.get(`yasakliTag_${msg.guild.id}`).map(x => arr.push(x));
-    taglar.forEach(tag => {
-      arr.push(arr.filter(a => !taglar));
+    await taglar.forEach(tag => {
+      arr2 = arr.filter(arr => arr !== tag);
     });
-    await console.log("")
+    await db.set(`yasakliTag_${msg.guild.id}`, arr2);
+    msg.channel.send(client.nrmlembed(`**Başarıyla** \`\`[${arr2.join(" , ")}]\`\` **tag(lar)ı yasaklı tagdan çıkarıldı.\n\n__**Şuan Yasaklıda Olan Taglar:**__(\`${db.get(`yasakliTag_${msg.guild.id}`).join(", ")}\`)`));
   };
 };
 
