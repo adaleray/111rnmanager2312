@@ -1,4 +1,4 @@
-module.exports.run = ({ msg, client, args, cfg }) => {
+module.exports.execute = ({ msg, client, args, cfg }) => {
   return;
 };
 
