@@ -47,7 +47,12 @@ module.exports.execute = async ({client, msg, author, args, db, cfg}) => {
       });
     };
   } else if (type === "rol-sil") {
-    
+    if (db.get(`yasakliTagRol_${msg.guild.id}`)) {
+      await db.delete(`yasakliTagRol_${msg.guild.id}`);
+      await msg.channel.send("**Başarıyla yasaklı tag rolü silindi.**").then(m => m.delete({ timeout: 5000 }));
+    } else {
+      await msg.channel.send("**")
+    };
   } else if (type === "tag-ekle") {
     
   } else if (type === "tag-sil") {
