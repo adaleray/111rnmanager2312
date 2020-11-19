@@ -1,7 +1,4 @@
-const { Client } = require("discord.js");
-const client = new Client();
-module.exports.event = () => {
-  
+module.exports.event = (client = global.client) => {
   console.log(client.user.id);
   client.user.setStatus("idle");
 };

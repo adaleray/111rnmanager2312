@@ -11,5 +11,6 @@ module.exports = ({fs, client}) => {
     });
     for (var value of client.commands.values()) komutlar.push(value.help.name);
     console.log("[" + komutlar.join(", ") + "]" + " isimli komut(lar) yüklendi.");
+    console.log("--------------------------");
   });
 };
