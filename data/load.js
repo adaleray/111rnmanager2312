@@ -1,4 +1,4 @@
-module.exports = ({fs, client}) => {
+module.exports = (fs, client) => {
   fs.readdir("./events/", (err, files, events = []) => {
     if (err) return console.log(err);
     console.log("--------------------------");

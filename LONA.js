@@ -8,7 +8,7 @@ global.client = client;
 client.commands = new Map();
 client.aliases = new Map();
 
-require("./data/functions.js")({client: client, cfg: cfg});
-require("./data/load.js")({fs: fs, client: client});
-require("./data/commandHandler.js")({fs: fs, client: client});
+require("./data/functions.js")(client, cfg);
+require("./data/load.js")(fs, client);
+require("./data/commandHandler.js")(fs, client);
 require("./data/login.js")(client, cfg);

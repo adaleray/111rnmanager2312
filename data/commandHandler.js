@@ -1,4 +1,4 @@
-module.exports = ({fs, client}) => {
+module.exports = (fs, client) => {
   fs.readdir("./komutlar/", (err, files, komutlar = []) => {
     console.log("Komutlar Yükleniyor.");
     if (err) return console.log("Error var error " + err);
