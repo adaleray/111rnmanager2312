@@ -73,9 +73,14 @@ module.exports.execute = async ({client, msg, author, args, db, cfg}) => {
       msg.channel.send(client.nrmlembed(`**Başarıyla** \`\`[${arr.join(" , ")}]\`\` **tag(lar)ı yasaklı taga atıldı.**`));
     };
   } else if (type === "tag-sil") {
+    if (!db.get(`yasakliTag_${msg.guild.id}`)) return msg.channel.send("**Silinecek bir yasaklı tag bulunmamakta !**").then(m => m.delete({ timeout: 5000 }));
+    let arr = db.get(`yasakliTag_${msg.guild.id}`);
+    let taglar = args.slice(1).join("").split("");
     
+    console.log(taglar);
     //msg.channel.send(client.nrmlembed(`**Başarıyla** \`\`[${taglar.join(" , ")}]\`\` **tag(lar)ı yasaklı tagdan çıkarıldı.**\n\n__**Şuan Yasaklıda Olan Taglar: **__(\`${db.get(`yasakliTag_${msg.guild.id}`).join(", ") || "Yasaklı Tag Yok !"}\`)`));
   } else if (type === "tüm-tagları-sil") {
+    if (!db.get(`yasakliTag_${msg.guild.id}`)) return msg.channel.send("**Silinecek bir yasaklı tag bulunmamakta !**").then(m => m.delete({ timeout: 5000 }));
     await db.delete(`yasakliTag_${msg.guild.id}`);
     await msg.channel.send("**Tüm yasaklı taglar silindi.**").then(m => m.delete({ timeout: 5000 }));
   };
