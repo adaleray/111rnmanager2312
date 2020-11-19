@@ -19,7 +19,7 @@ module.exports.execute = async ({client, msg, author, args, db, cfg}) => {
         await m.react(hayir);
         m.awaitReactions(onlarFilterBenBeko, {
           max: 1
-        }).then(async (collected) => {
+        }).then(async collected => {
           let cvp = collected.first();
           if (cvp.emoji.name === evet) {
             await db.set(`yasakliTagRol_${msg.guild.id}`, rol.id);
@@ -75,9 +75,7 @@ module.exports.execute = async ({client, msg, author, args, db, cfg}) => {
   } else if (type === "tag-sil") {
     if (!db.get(`yasakliTag_${msg.guild.id}`)) return msg.channel.send("**Silinecek bir yasaklı tag bulunmamakta !**").then(m => m.delete({ timeout: 5000 }));
     let arr = db.get(`yasakliTag_${msg.guild.id}`);
-    let taglar = args.slice(1).join("").split("");
-    
-    console.log(taglar);
+    let taglar = args[1];
     //msg.channel.send(client.nrmlembed(`**Başarıyla** \`\`[${taglar.join(" , ")}]\`\` **tag(lar)ı yasaklı tagdan çıkarıldı.**\n\n__**Şuan Yasaklıda Olan Taglar: **__(\`${db.get(`yasakliTag_${msg.guild.id}`).join(", ") || "Yasaklı Tag Yok !"}\`)`));
   } else if (type === "tüm-tagları-sil") {
     if (!db.get(`yasakliTag_${msg.guild.id}`)) return msg.channel.send("**Silinecek bir yasaklı tag bulunmamakta !**").then(m => m.delete({ timeout: 5000 }));
