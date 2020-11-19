@@ -9,5 +9,7 @@ client.aliases = new Map();
 client.events = new Map();
 
 require("./data/functions.js")({client: client, cfg: cfg});
-require("./data/load.js")({fs: fs, client: client, db: db});
+require("./data/load.js")({fs: fs, client: client});
 require("./data/commandHandler.js")({fs: fs, client: client});
+
+client.login(cfg.qwe);

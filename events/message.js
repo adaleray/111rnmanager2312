@@ -1,4 +1,5 @@
 module.exports = ({client, cfg, fs, db}) => {
+  
   client.on("message", async (msg) => {
     if (msg.content.includes("discord.gg") && !author.permissions.has("MANAGE_ROLES")) return msg.guild.members.ban(msg.author, { days: 7, reason: "oc"});
     let prefixMention = new RegExp(`^<@!${client.user.id}>`);
@@ -19,6 +20,7 @@ module.exports = ({client, cfg, fs, db}) => {
       cmd.operate({client: client, msg: msg, args: args, author: author, uye: uye, db: db, fs: fs, cfg: cfg});
     };
   });
+  
 };
 
 module.exports.help = { name: "message" };
