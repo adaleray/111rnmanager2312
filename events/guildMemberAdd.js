@@ -16,6 +16,8 @@ module.exports.event = async (uye, client = global.client, cfg = require("../con
       if (uye.roles.cache.get(cfg.roles.unregister)) uye.roles.remove(cfg.roles.unregister).catch(err => console.log(err.message));
     };
   };
+  
+  
 };
 
 module.exports.help = { name: "guildMemberAdd" };
