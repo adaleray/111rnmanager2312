@@ -1,5 +1,4 @@
 module.exports = ({client, cfg}) => {
-  
   client.duzembed = (message) => {
     return {
       embed: {
