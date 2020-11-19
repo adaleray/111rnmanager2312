@@ -51,12 +51,27 @@ module.exports.execute = async ({client, msg, author, args, db, cfg}) => {
       await db.delete(`yasakliTagRol_${msg.guild.id}`);
       await msg.channel.send("**Başarıyla yasaklı tag rolü silindi.**").then(m => m.delete({ timeout: 5000 }));
     } else {
-      await msg.channel.send("**")
+      await msg.channel.send("**Silinecek bir rol yok.**").then(m => m.delete({ timeout: 5000 }));
     };
   } else if (type === "tag-ekle") {
-    
+    let taglar = args.slice(1).join("").split("");
+    var arr = []
+    if (db.get(`yasakliTag_${msg.guild.id}`)) {
+      taglar.forEach(async (x, arr = []) => {
+        await db.push(`yasakliTag_${msg.guild.id}`, x);
+        arr.push(x);
+      });
+      
+      msg.channel.send(arr.join(" "));
+    } else {
+      await taglar.forEach(async (x, arr = []) => {
+         arr.push(x);
+       });
+      await db.set(`yasakliTag_${msg.guild.id}`, arr);
+      msg.channel.send(arr.join(" "));
+    };
   } else if (type === "tag-sil") {
-    
+      
   };
   
 };
