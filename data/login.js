@@ -1,1 +1,1 @@
-module.exports = (client, ) => client.login(qwe);
+module.exports = (client, cfg) => client.login(cfg.qwe);
