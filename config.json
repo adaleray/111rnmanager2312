@@ -6,7 +6,9 @@
   "roles": {
     "unregister": "772177057933164605",
     "erkek": [],
-    "kız": []
+    "kız": [],
+    "yasaklıTagRol": "",
+    "fakeRol": ""
   },
   
   "tag": {
