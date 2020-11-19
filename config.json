@@ -9,6 +9,12 @@
     "kız": []
   },
   
+  "tag": {
+    "taglıTag": "",
+    "tagsızTag": "",
+    "tagRol": ""
+  },
+  
   "chats": {
     "gchat": "",
     "kayıtChat": "772176948470218813",
