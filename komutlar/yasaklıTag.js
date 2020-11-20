@@ -1,8 +1,8 @@
-var evet = "✅";
-var hayir = "❌";
 module.exports.execute = async ({client, msg, author, args, db, cfg}) => {
   if (!cfg.sahipler.includes(author.id)) return;
-  let type = args[0].toLowerCase();
+  const type = args[0].toLowerCase();
+  const evet = "✅";
+  const hayir = "❌";
   if (type === "rol-ekle") {
     const rol = msg.mentions.roles.first() || msg.guild.roles.cache.get(args[1]);
     function onlarFilterBenBeko(r, u) { return [evet, hayir].includes(r.emoji.name) && u.id === msg.author.id };
