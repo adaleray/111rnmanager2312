@@ -7,7 +7,10 @@ module.exports.event = async (uye, client = global.client, cfg = require("../con
   let tag = cfg.tag.tagsızTag === "" ?  cfg.tag.taglıTag : cfg.tag.tagsızTag;
   
   let zaman = (new Date().getTime() - uye.user.createdAt.getTime());
+  
   if (client.cezalilar.has(uye.id)) return uye.roles.add(cfg.roles.jail);
+  if (client.cmuteliler.has(uye.id)) return uye.roles.add(cfg.roles.muted);
+  
   if (yasakliTag.includes(uye.user.username)) {
     if (yasakliTagRol === "") {
       await uye.roles.add(cfg.roles.unregister).catch();

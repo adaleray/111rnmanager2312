@@ -2,6 +2,8 @@ module.exports.event = (uye, client = global.client, db = require("quick.db"), c
   client.cezalilar = new Set();
   if (uye.roles.cache.get(cfg.roles.jail)) {
     client.cezalilar.set(uye.id);
+  } else if (uye.roles.cache.get(cfg.roles.muted)) {
+    client.cmuteliler.set(uye.id);
   };
 };
 

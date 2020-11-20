@@ -59,10 +59,11 @@ module.exports.execute = async ({client, msg, author, args, db, cfg}) => {
     if (db.get(`yasakliTag_${msg.guild.id}`)) {
       var arr = [];
       await taglar.forEach(async x => {
+        if (await db.get(`yasakliTag_${msg.guild.id}`).includes(x)) return msg.channel.send(x + " tagı zaten yasaklıda.");
         await db.push(`yasakliTag_${msg.guild.id}`, x);
         arr.push(x);
       });
-      msg.channel.send(client.nrmlembed(`**Başarıyla** \`\`[${arr.join(" , ")}]\`\` **tag(lar)ı yasaklı taga atıldı.**\n\n__**Şuan Yasaklıda Olan Taglar: **__(\`${db.get(`yasakliTag_${msg.guild.id}`).join(", ")}\`)`));
+      msg.channel.send(client.nrmlembed(`**Başarıyla** \`\`[${arr.length >= 1 ? arr.join(" , ") : "Eklenen Tag Yok !"}]\`\` **tag(lar)ı yasaklı taga atıldı.**\n\n__**Şuan Yasaklıda Olan Taglar: **__(\`${db.get(`yasakliTag_${msg.guild.id}`).join(", ")}\`)`));
     } else {
       var arr = [];
       await taglar.forEach(x => arr.push(x));
