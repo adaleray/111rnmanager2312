@@ -100,7 +100,7 @@ module.exports.execute = async ({client, msg, author, args, db, cfg}) => {
   } else if (type === "yardım") {
     await msg.channel.send(
       client.nrmlembed(
-        `__**Yasaklı Tag Komutları:**__\n\n \`• yasaklıtag tag-ekle\n• yasaklıtag tag-sil\n• yasaklıtag tüm-tagları-sil\n• yasaklıtag rol-ekle\n• yasaklıtag rol-sil\n• yasaklıtag görüntüle\``
+        `__**Yasaklı Tag Komutları:**__\n\n \`• yasaklıtag tag-ekle\n• yasaklıtag tag-sil\n• yasaklıtag tüm-tagları-sil\n• yasaklıtag rol-ekle\n• yasaklıtag rol-sil\n• yasaklıtag görüntüle\n• yasaklıtag sistem-kapat\``
       )
     );
   };
