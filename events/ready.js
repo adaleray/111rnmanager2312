@@ -1,4 +1,4 @@
-class login { constructor(client) { this.client = client; } async log(guild) { this.client.user.setStatus("idle"); console.log("(" + this.client.user.username + ") adlı hesapta [" + guild.name + "] adlı sunucuda giriş yapıldı."); } }
+class login { constructor(client) { this.client = client; } log(guild) { this.client.user.setStatus("idle"); console.log("(" + this.client.user.username + ") adlı hesapta [" + guild.name + "] adlı sunucuda giriş yapıldı."); } }
 
 module.exports.event = (client = global.client, { sunucu, roles } = require("../config.json"), cfg = require("../config.json"), db = require("quick.db")) => {
   new login(client).log(client.guilds.cache.get(sunucu));
