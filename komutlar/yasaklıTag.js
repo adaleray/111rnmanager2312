@@ -1,8 +1,3 @@
-module.exports.help = {
-  name: "yasaklıtag",
-  alias: []
-};
-
 module.exports.execute = async ({client, msg, author, args, db, cfg}) => {
   if (!cfg.sahipler.includes(author.id)) return;
   var evet = "✅";
@@ -107,4 +102,9 @@ module.exports.execute = async ({client, msg, author, args, db, cfg}) => {
       )
     );
   };
+};
+
+module.exports.help = {
+  name: "yasaklıtag",
+  alias: []
 };
