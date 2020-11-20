@@ -3,7 +3,7 @@ class login { constructor(client) { this.client = client; } async log(guild) { t
 module.exports.event = (client = global.client, { sunucu, roles } = require("../config.json"), cfg = require("../config.json"), db = require("quick.db")) => {
   new login(client).log(client.guilds.cache.get(sunucu));
   setInterval(() => yasakliTag(client, sunucu, roles, cfg, db), client.getDate(2, "saat"));
-  setInterval(() => chatEdit(client, sunucu, cfg.chats.gchat, cfg.snc.sncIsim, cfg.snc.tagRolIsim, cfg.tag.taglıTag), client.getDate(5, "saniye"));
+  setInterval(() => chatEdit(client, sunucu, cfg.chats.gchat, cfg.snc.sncIsim, cfg.snc.tagRolIsim, cfg.tag.taglıTag), client.getDate(30, "dakika"));
 };
 
 module.exports.help = { name: "ready" };
