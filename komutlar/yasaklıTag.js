@@ -81,12 +81,13 @@ module.exports.execute = async ({client, msg, author, args, db, cfg}) => {
     await db.delete(`yasakliTag_${msg.guild.id}`);
     await msg.channel.send("**Tüm yasaklı taglar silindi.**").then(m => m.delete({ timeout: 5000 }));
   } else if (type === "görüntüle") {
-    let taglar = db.get(`yasakliTag_${msg.guild.id}`);
-    let rol = db.get(`yasakliTagRol_${msg.guild.id}`);
+    let kontrol = db.get(`yasakliTagKontrol_${msg.guild.id}`) || "kapali";
+    let taglar = db.get(`yasakliTag_${msg.guild.id}`) || [];
+    let rol = db.get(`yasakliTagRol_${msg.guild.id}`) || "";
     await msg.channel.send({
       embed: {
        author: { icon_url: msg.guild.iconURL({dynamic:true}), name: msg.guild.name },
-        description: `**Sunucudaki Yasaklı Taglar:** \`${taglar.join(", ") || "Yasaklı Tag Yok !"}\` \n**Yasaklı Tag Rolü:** \`${rol || "Yasakli Tag Rolü Yok !"}\``,
+        description: `**Sunucudaki Yasaklı Taglar:** \`${taglar.join(", ") || "Yasaklı Tag Yok !"}\` \n**Yasaklı Tag Rolü:** \`${rol || "Yasakli Tag Rolü Yok !"}\`\n**Yasaklı Tag Sistemi:**\`${kontrol === "kapali" ? "Kapalı" : "Açık"}\` `,
         timestamp: new Date(),
         color: Math.floor(Math.random() * (0xFFFFFF + 1))
       }
@@ -118,13 +119,27 @@ module.exports.execute = async ({client, msg, author, args, db, cfg}) => {
         });
       });
     } else if (type2 === "kapat") {
+      function BekoAslındaFilter(r, u) { [evet, hayir].includes(r.emoji.name) && u.id === msg.author.id };
       if (kontrol === "kapali") return msg.channel.send("**Yasaklı tag sistemi zaten kapalı.**").then(m => m.delete({ timeout: 5000 }));
-      function bekoAslındaFilter(r, u) { [evet, hayir].includes(r.emoji.name) && u.id === msg.author.id };
+      await msg.channel.send({embed:{description:`**Yasaklı tag sistemini kapatmak istediğine emin misin?**`, color:Math.floor(Math.random() * (0xFFFFFF + 1))}}).then(async m => {
+        await m.react(evet);
+        await m.react(hayir);
+        m.awaitReactions(BekoAslındaFilter, { max: 1 }).then(async collected => {
+          var cvp = collected.first();
+          if (cvp.emoji.name === "evet") {
+            await db.set(`yasakliTagKontrol_${msg.guild.id}`, "kapali");
+            await msg.channel.send({embed:{description:`**Yasaklı tag sistemi başarıyla kapatıldı.**`, color:Math.floor(Math.random() * (0xFFFFFF+ 1)), timestamp:new Date()}}).then(msj => msj.delete({ timeout: 5000 }));
+          } else {
+            await m.delete().catch();
+            await msg.channel.send({embed:{description:`**Komut başarıyla iptal edildi.**`, color:Math.floor(Math.random() * (0xFFFFFF + 1))}}).then(msj => msj.delete({timeout:5000}));
+          };
+        });
+      });
     };
   } else if (type === "yardım") {
     await msg.channel.send(
       client.nrmlembed(
-        `__**Yasaklı Tag Komutları:**__\n\n \`• yasaklıtag tag-ekle\n• yasaklıtag tag-sil\n• yasaklıtag tüm-tagları-sil\n• yasaklıtag rol-ekle\n• yasaklıtag rol-sil\n• yasaklıtag görüntüle\n• yasaklıtag tüm-sistemi-sil\``
+        `__**Yasaklı Tag Komutları:**__\n\n \`• yasaklıtag tag-ekle\n• yasaklıtag tag-sil\n• yasaklıtag tüm-tagları-sil\n• yasaklıtag rol-ekle\n• yasaklıtag rol-sil\n• yasaklıtag görüntüle\n• yasaklıtag tüm-sistemi-sil\n• yasaklıtag kontrol aç\kapa\``
       )
     );
   };
