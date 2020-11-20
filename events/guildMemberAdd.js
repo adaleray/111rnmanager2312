@@ -38,7 +38,7 @@ module.exports.event = async (uye, client = global.client, cfg = require("../con
     await uye.roles.add(cfg.roles.unregister);
     await uye.setNickname(`${tag} İsim | yaş`);
     await uye.guild.channels.cache.get(cfg.chats.kayıtChat).send(
-      ``
+      `qwe`
     ).catch();
   };
 };

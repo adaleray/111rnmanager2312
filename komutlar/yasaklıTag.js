@@ -93,15 +93,16 @@ module.exports.execute = async ({client, msg, author, args, db, cfg}) => {
         color: Math.floor(Math.random() * (0xFFFFFF + 1))
       }
     });
-  } else if (type === "sistem-kapat"){
+  } else if (type === "tüm-sistemi-sil"){
     await db.delete(`yasakliTag_${msg.guild.id}`);
     await db.delete(`yasakliTagRol_${msg.guild.id}`);
-    await msg.channel.send({embed:{description:`**Yasaklı Tag Sistemi Tamamiyle Kapatılmıştır.**`, color:Math.floor(Math.random() * (0xFFFFFF + 1)), timestamp: new Date()}})
+    await msg.channel.send({embed:{description:`**Yasaklı Tag Sistemi Tamamiyle Silinmiştir.**`, color:Math.floor(Math.random() * (0xFFFFFF + 1)), timestamp: new Date()}});
+    
   } else if (type === "yardım") {
     await msg.channel.send(
       client.nrmlembed(
-        `__**Yasaklı Tag Komutları:**__\n\n \`• yasaklıtag tag-ekle\n• yasaklıtag tag-sil\n• yasaklıtag tüm-tagları-sil\n• yasaklıtag rol-ekle\n• yasaklıtag rol-sil\n• yasaklıtag görüntüle\n• yasaklıtag sistem-kapat\``
-      )
+        `__**Yasaklı Tag Komutları:**__\n\n \`• yasaklıtag tag-ekle\n• yasaklıtag tag-sil\n• yasaklıtag tüm-tagları-sil\n• yasaklıtag rol-ekle\n• yasaklıtag rol-sil\n• yasaklıtag görüntüle\n• yasaklıtag tüm-sistemi-sil\``
+      ).setAuthor
     );
   };
 };
