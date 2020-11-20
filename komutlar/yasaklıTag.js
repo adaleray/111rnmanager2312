@@ -1,3 +1,8 @@
+module.exports.help = {
+  name: "yasaklıtag",
+  alias: []
+};
+
 module.exports.execute = async ({client, msg, author, args, db, cfg}) => {
   if (!cfg.sahipler.includes(author.id)) return;
   var evet = "✅";
@@ -58,7 +63,7 @@ module.exports.execute = async ({client, msg, author, args, db, cfg}) => {
     let taglar = args.slice(1).join("").split("");
     if (db.get(`yasakliTag_${msg.guild.id}`)) {
       var arr = [];
-      await taglar.forEach(async (x) => {
+      await taglar.forEach(async x => {
         await db.push(`yasakliTag_${msg.guild.id}`, x);
         arr.push(x);
       });
@@ -102,9 +107,4 @@ module.exports.execute = async ({client, msg, author, args, db, cfg}) => {
       )
     );
   };
-};
-
-module.exports.help = {
-  name: "yasaklıtag",
-  alias: []
 };
