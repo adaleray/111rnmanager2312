@@ -43,7 +43,7 @@ module.exports = (client, cfg) => {
   client.emojili = (string) => {
     let str = "";
     String(string).split("").forEach(x => {
-      str += "" + cfg.elevation.sayilar[Number(x)];
+      str += "" + cfg.sayilar[Number(x)];
     });
     return str;
   };
