@@ -56,7 +56,6 @@ module.exports.execute = async ({client, msg, author, args, db, cfg}) => {
     };
   } else if (type === "tag-ekle") {
     let taglar = args.slice(1).join("").split("");
-    var arr = [];
     if (db.get(`yasakliTag_${msg.guild.id}`)) {
       var arr = [];
       await taglar.forEach(async (x) => {
@@ -66,9 +65,7 @@ module.exports.execute = async ({client, msg, author, args, db, cfg}) => {
       msg.channel.send(client.nrmlembed(`**Başarıyla** \`\`[${arr.join(" , ")}]\`\` **tag(lar)ı yasaklı taga atıldı.**\n\n__**Şuan Yasaklıda Olan Taglar: **__(\`${db.get(`yasakliTag_${msg.guild.id}`).join(", ")}\`)`));
     } else {
       var arr = [];
-      await taglar.forEach(async (x) => {
-         arr.push(x);
-       });
+      await taglar.forEach(x => arr.push(x));
       await db.set(`yasakliTag_${msg.guild.id}`, arr);
       msg.channel.send(client.nrmlembed(`**Başarıyla** \`\`[${arr.join(" , ")}]\`\` **tag(lar)ı yasaklı taga atıldı.**`));
     };
@@ -102,7 +99,7 @@ module.exports.execute = async ({client, msg, author, args, db, cfg}) => {
     await msg.channel.send(
       client.nrmlembed(
         `__**Yasaklı Tag Komutları:**__\n\n \`• yasaklıtag tag-ekle\n• yasaklıtag tag-sil\n• yasaklıtag tüm-tagları-sil\n• yasaklıtag rol-ekle\n• yasaklıtag rol-sil\n• yasaklıtag görüntüle\n• yasaklıtag tüm-sistemi-sil\``
-      ).setAuthor
+      )
     );
   };
 };
