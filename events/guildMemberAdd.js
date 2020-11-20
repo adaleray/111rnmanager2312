@@ -1,17 +1,12 @@
 module.exports.event = async (uye, client = global.client, cfg = require("../config.json"), db = require("quick.db")) => {
-  
   const yasakliTag = db.get(`yasakliTag_${uye.guild.id}`) || cfg.tag.yasakliTaglar;
   const yasakliTagRol = db.get(`yasakliTagRol_${uye.guild.id}`) || cfg.roles.yasaklıTagRol;
   const fakeRol = cfg.roles.fakeRol;
   const yasaklıKontrol = db.get(`yasakliTagKontrol_${uye.guild.id}`) || "kapali";
-  
   let tag = cfg.tag.tagsızTag === "" ?  cfg.tag.taglıTag : cfg.tag.tagsızTag;
-  
   let zaman = (new Date().getTime() - uye.user.createdAt.getTime());
-  
   if (client.cezalilar.has(uye.id)) return uye.roles.add(cfg.roles.jail);
   if (client.cmuteliler.has(uye.id)) return uye.roles.add(cfg.roles.muted);
-  
   if (yasakliTag.includes(uye.user.username)) {
     if (yasaklıKontrol === "kapali") return null;
     if (yasakliTagRol === "") {
