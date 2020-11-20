@@ -83,11 +83,24 @@ module.exports.execute = async ({client, msg, author, args, db, cfg}) => {
     await db.delete(`yasakliTag_${msg.guild.id}`);
     await msg.channel.send("**Tüm yasaklı taglar silindi.**").then(m => m.delete({ timeout: 5000 }));
   } else if (type === "görüntüle") {
-    
+    let taglar = db.get(`yasakliTag_${msg.guild.id}`);
+    let rol = db.get(`yasakliTagRol_${msg.guild.id}`);
+    await msg.channel.send({
+      embed: {
+       author: { icon_url: msg.guild.iconURL({dynamic:true}), name: msg.guild.name },
+        description: `**Sunucudaki Yasaklı Taglar:** \`${taglar.join(", ") || "Yasaklı Tag Yok !"}\` \n**Yasaklı Tag Rolü:** \`${rol || "Yasakli Tag Rolü Yok !"}\``,
+        timestamp: new Date(),
+        color: Math.floor(Math.random() * (0xFFFFFF + 1))
+      }
+    });
+  } else if (type === "sistem-kapat"){
+    await db.delete(`yasakliTag_${msg.guild.id}`);
+    await db.delete(`yasakliTagRol_${msg.guild.id}`);
+    await msg.channel.send({embed:{description:`**Yasaklı Tag Sistemi Tamamiyle Kapatılmıştır.**`, color:Math.floor(Math.random() * (0xFFFFFF + 1)), timestamp: new Date()}})
   } else if (type === "yardım") {
     await msg.channel.send(
       client.nrmlembed(
-        `__**Yasaklı Tag Komutları:**__\n\n \`• yasaklıtag tag-ekle\n• yasaklıtag tag-sil\n• yasaklıtag tüm-tagları-sil\n• yasaklıtag rol-ekle\n• yasaklıtag rol-sil\n• yasaklıtag görüntüle\` `
+        `__**Yasaklı Tag Komutları:**__\n\n \`• yasaklıtag tag-ekle\n• yasaklıtag tag-sil\n• yasaklıtag tüm-tagları-sil\n• yasaklıtag rol-ekle\n• yasaklıtag rol-sil\n• yasaklıtag görüntüle\``
       )
     );
   };
