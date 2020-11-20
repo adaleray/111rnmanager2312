@@ -64,15 +64,8 @@ module.exports.execute = async ({client, msg, author, args, db, cfg}) => {
     let kontrol = db.get(`yasakliTagKontrol_${msg.guild.id}`) || "kapali";
     let taglar = db.get(`yasakliTag_${msg.guild.id}`) || [];
     let rol = db.get(`yasakliTagRol_${msg.guild.id}`) || "";
-    await msg.channel.send({
-      embed: {
-       author: { icon_url: msg.guild.iconURL({dynamic:true}), name: msg.guild.name },
-        description: `**Sunucudaki Yasaklı Taglar:** \`${taglar.join(", ") || "Yasaklı Tag Yok !"}\` \n**Yasaklı Tag Rolü:** \`${rol || "Yasakli Tag Rolü Yok !"}\`\n**Yasaklı Tag Sistemi: **\`${kontrol === "acik" ? "Açık" : "Kapalı"}\` `,
-        timestamp: new Date(),
-        color: Math.floor(Math.random() * (0xFFFFFF + 1))
-      }
-    });
-  } else if (type === "tüm-sistemi-sil"){
+    await msg.channel.send({embed: {author: { icon_url: msg.guild.iconURL({dynamic:true}), name: msg.guild.name },description: `**Sunucudaki Yasaklı Taglar:** \`${taglar.join(", ") || "Yasaklı Tag Yok !"}\` \n**Yasaklı Tag Rolü:** \`${rol || "Yasakli Tag Rolü Yok !"}\`\n**Yasaklı Tag Sistemi: **\`${kontrol === "acik" ? "Açık" : "Kapalı"}\` `,timestamp: new Date(),color: Math.floor(Math.random() * (0xFFFFFF + 1))}});
+  } else if (type === "tüm-sistemi-sil") {
     await db.delete(`yasakliTag_${msg.guild.id}`);
     await db.delete(`yasakliTagRol_${msg.guild.id}`);
     await db.set(`yasakliTagKontrol_${msg.guild.id}`, "kapali");
@@ -120,7 +113,7 @@ module.exports.execute = async ({client, msg, author, args, db, cfg}) => {
   } else if (type === "yardım") {
     await msg.channel.send(
       client.nrmlembed(
-        `__**Yasaklı Tag Komutları:**__\n\n \`• yasaklıtag tag-ekle\n• yasaklıtag tag-sil\n• yasaklıtag tüm-tagları-sil\n• yasaklıtag rol-ekle\n• yasaklıtag rol-sil\n• yasaklıtag görüntüle\n• yasaklıtag tüm-sistemi-sil\n• yasaklıtag kontrol aç\kapa\``
+        `__**Yasaklı Tag Komutları:**__\n\n \`• yasaklıtag tag-ekle\n• yasaklıtag tag-sil\n• yasaklıtag tüm-tagları-sil\n• yasaklıtag rol-ekle\n• yasaklıtag rol-sil\n• yasaklıtag görüntüle\n• yasaklıtag tüm-sistemi-sil\n• yasaklıtag kontrol aç-kapa\``
       )
     );
   };
