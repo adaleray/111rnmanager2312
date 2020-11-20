@@ -94,8 +94,14 @@ module.exports.execute = async ({client, msg, author, args, db, cfg}) => {
   } else if (type === "tüm-sistemi-sil"){
     await db.delete(`yasakliTag_${msg.guild.id}`);
     await db.delete(`yasakliTagRol_${msg.guild.id}`);
+    await db.set(`yasakliTagKontrol_${msg.guild.id}`, "kapali");
     await msg.channel.send({embed:{description:`**Yasaklı Tag Sistemi Tamamiyle Silinmiştir.**`, color:Math.floor(Math.random() * (0xFFFFFF + 1)), timestamp: new Date()}});
-    
+  } else if (type === "kontrol") {
+    let kontrol = db.get(`yasakliTagKontrol_${msg.guild.id}`) || "kapali";
+    if (kontrol === "kapali") {
+      
+      await db.set(`yasakliTagKontrol_${msg.guild.id}`, "açık");
+    }
   } else if (type === "yardım") {
     await msg.channel.send(
       client.nrmlembed(
