@@ -76,12 +76,20 @@ module.exports.execute = async ({client, msg, author, args, db, cfg}) => {
     if (!db.get(`yasakliTag_${msg.guild.id}`)) return msg.channel.send("**Silinecek bir yasaklı tag bulunmamakta !**").then(m => m.delete({ timeout: 5000 }));
     let arr = db.get(`yasakliTag_${msg.guild.id}`);
     let taglar = args[1];
-    db.push(`yasakliTag_${msg.guild.id}`, arr.filter(a => a !== taglar));
-    //msg.channel.send(client.nrmlembed(`**Başarıyla** \`\`[${taglar.join(" , ")}]\`\` **tag(lar)ı yasaklı tagdan çıkarıldı.**\n\n__**Şuan Yasaklıda Olan Taglar: **__(\`${db.get(`yasakliTag_${msg.guild.id}`).join(", ") || "Yasaklı Tag Yok !"}\`)`));
+    db.set(`yasakliTag_${msg.guild.id}`, arr.filter(a => a !== taglar));
+    msg.channel.send(client.nrmlembed(`**Başarıyla** \`\`[${taglar}]\`\` **tagı yasaklı tagdan çıkarıldı.**\n\n__**Şuan Yasaklıda Olan Taglar: **__(\`${db.get(`yasakliTag_${msg.guild.id}`).join(", ") || "Yasaklı Tag Yok !"}\`)`));
   } else if (type === "tüm-tagları-sil") {
     if (!db.get(`yasakliTag_${msg.guild.id}`)) return msg.channel.send("**Silinecek bir yasaklı tag bulunmamakta !**").then(m => m.delete({ timeout: 5000 }));
     await db.delete(`yasakliTag_${msg.guild.id}`);
     await msg.channel.send("**Tüm yasaklı taglar silindi.**").then(m => m.delete({ timeout: 5000 }));
+  } else if (type === "görüntüle") {
+    
+  } else if (type === "yardım") {
+    await msg.channel.send(
+      client.nrmlembed(
+        `__**Yasaklı Tag Komutları:**__\n\n \`• yasaklıtag tag-ekle\n• yasaklıtag tag-sil\n• yasaklıtag tüm-tagları-sil\n• yasaklıtag rol-ekle\n• yasaklıtag rol-sil\n• yasaklıtag görüntüle\` `
+      )
+    );
   };
 };
 
