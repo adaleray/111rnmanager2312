@@ -98,10 +98,29 @@ module.exports.execute = async ({client, msg, author, args, db, cfg}) => {
     await msg.channel.send({embed:{description:`**Yasaklı Tag Sistemi Tamamiyle Silinmiştir.**`, color:Math.floor(Math.random() * (0xFFFFFF + 1)), timestamp: new Date()}});
   } else if (type === "kontrol") {
     let kontrol = db.get(`yasakliTagKontrol_${msg.guild.id}`) || "kapali";
-    if (kontrol === "kapali") {
-      
-      await db.set(`yasakliTagKontrol_${msg.guild.id}`, "açık");
-    }
+    let type2 = args[1].toLowerCase();
+    if (type2 === "aç") {
+      function BekoAslındaFilter(r, u) { [evet, hayir].includes(r.emoji.name) && u.id === msg.author.id };
+      if (kontrol === "acik") return msg.channel.send("**Yasaklı tag sistemi zaten açık.**").then(m => m.delete({ timeout: 5000 }));
+      await msg.channel.send({embed:{description:`**Yasaklı tag sistemini açmak istediğine emin misin?**\n\n\`Bu sistem açıldığıktan yasaklı taga düşecek taglar: ${db.get(`yasakliTag_${msg.guild.id}`).join(", ") || "Yasaklı Tag Yok !"}\``, timestamp: new Date(), color:Math.floor(Math.random() * (0xFFFFFF + 1))}}).then(async m => {
+        await m.react(evet);
+        await m.react(hayir);
+        m.awaitReactions(BekoAslındaFilter, { max: 1 }).then(async collected => {
+          let cvp = collected.first();
+          if (cvp.emoji.name === "evet") {
+            await m.delete().catch();
+            await db.set(`yasakliTagKontrol_${msg.guild.id}`, "acik");
+            await msg.channel.send({embed:{description:`**Yasaklı tag sistemi başarıyla açıldı.**`, color:Math.floor(Math.random() * (0xFFFFFF+ 1)), timestamp:new Date()}}).then(msj => msj.delete({ timeout: 5000 }));
+          } else {
+            await m.delete().catch();
+            await msg.channel.send({embed:{description:`**Komut başarıyla iptal edildi.**`, color:Math.floor(Math.random() * (0xFFFFFF + 1))}}).then(msj => msj.delete({timeout:5000}));
+          };
+        });
+      });
+    } else if (type2 === "kapat") {
+      if (kontrol === "kapali") return msg.channel.send("**Yasaklı tag sistemi zaten kapalı.**").then(m => m.delete({ timeout: 5000 }));
+      function bekoAslındaFilter(r, u) { [evet, hayir].includes(r.emoji.name) && u.id === msg.author.id };
+    };
   } else if (type === "yardım") {
     await msg.channel.send(
       client.nrmlembed(
