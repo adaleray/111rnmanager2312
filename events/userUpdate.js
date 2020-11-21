@@ -18,20 +18,20 @@ class otoTag {
     if (this.yeni.username.includes(this.tag)) {
       let degisecek = nick.replace(this.tagsız, this.tag);
       if (this.eski.username.includes(this.tag)) return;
+      if (this.tagsız === "") return uye.roles.add(this.tagrol).catch();
       await uye.roles.add(this.tagrol).catch();
       await uye.setNickname(`${degisecek}`).catch();
     } else {
       let degisecek = nick.replace(this.tag, this.tagsız);
       if (!this.eski.username.includes(this.tag)) return;
+      if (this.tagsız === "") return uye.roles.remove(this.tagrol).catch();
       await uye.roles.remove(this.tagrol).catch();
       await uye.setNickname(`${degisecek}`).catch();
     };
   }
 }
 
-module.exports.event = (
-  oldUser,
-  newUser,
-  client = global.client,
-  { roles, tag, sunucu } = require("../config.json")
-) => {};
+module.exports.event = (oldUser, newUser, client = global.client, cfg = require("../config.json")) => 
+{ 
+  new otoTag(oldUser, newUser, client, cfg.roles.tagRol, cfg.tag.taglıTag, cfg.tag.tagsızTag, cfg.sunucu).tagKontrol();
+};
