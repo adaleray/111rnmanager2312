@@ -12,8 +12,8 @@ class otoTag {
   }
   
   async tagKontrol() {
-    const uye = this.client.guilds.cache.get(this.sunucu);
-    const nick = uye.displayName;
+    let uye = this.client.guilds.cache.get(this.sunucu);
+    let nick = uye.displayName;
     if (this.eski.username === this.yeni.username) return;
     if (this.yeni.username.includes(this.tag)) {
       let degisecek = nick.replace(this.tagsız, this.tag);
@@ -31,7 +31,7 @@ class otoTag {
   }
 }
 
-module.exports.event = (oldUser, newUser, client = global.client, cfg = require("../config.json")) => 
+module.exports.event = async (oldUser, newUser, client = global.client, { roles, tag, sunucu } = require("../config.json")) =>
 { 
-  new otoTag(oldUser, newUser, client, cfg.roles.tagRol, cfg.tag.taglıTag, cfg.tag.tagsızTag, cfg.sunucu).tagKontrol();
+  new otoTag(oldUser, newUser, client, roles.tagRol, tag.taglıTag, tag.tagsızTag, sunucu).tagKontrol();
 };
