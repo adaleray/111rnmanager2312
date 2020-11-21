@@ -4,9 +4,11 @@ const db = require("quick.db");
 const client = new Client({ disableMentions: "everyone", ignoreDirect: true, ignoreRoles: true });
 const cfg = require("./config.json");
 
-global.client = client;
 client.commands = new Map();
 client.aliases = new Map();
+client.cezalilar = new Set();
+client.cmuteliler = new Set();
+global.client = client;
 
 require("./data/functions.js")(client, cfg);
 require("./data/load.js")(fs, client);
