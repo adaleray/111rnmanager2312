@@ -30,19 +30,6 @@ class OtoTag {
   };
 };
 
-module.exports.event = async (
-  oldUser,
-  newUser,
-  client = global.client,
-  { roles, tag, sunucu } = require("../config.json")
-) => {
-  new OtoTag(
-    oldUser,
-    newUser,
-    client,
-    roles.tagRol,
-    tag.taglıTag,
-    tag.tagsızTag,
-    sunucu
-  ).tagKontrol();
+module.exports.event = async (oldUser,newUser,client = global.client,{ roles, tag, sunucu } = require("../config.json")) => {
+  new OtoTag(oldUser, newUser, client, roles.tagRol, tag.taglıTag, tag.tagsızTag, sunucu).tagKontrol();
 };
