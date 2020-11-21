@@ -12,19 +12,19 @@ class otoTag {
   }
   
   async tagKontrol() {
-    let uye = this.client.guilds.cache.get(this.sunucu);
-    let nick = uye.displayName;
+    const uye = this.client.guilds.cache.get(this.sunucu).members.cache.get(this.yeni);
+    const nick = uye.displayName;
     if (this.eski.username === this.yeni.username) return;
     if (this.yeni.username.includes(this.tag)) {
-      let degisecek = nick.replace(this.tagsız, this.tag);
       if (this.eski.username.includes(this.tag)) return;
       if (this.tagsız === "") return uye.roles.add(this.tagrol).catch();
+      let degisecek = nick.replace(this.tagsız, this.tag);
       await uye.roles.add(this.tagrol).catch();
       await uye.setNickname(`${degisecek}`).catch();
     } else {
-      let degisecek = nick.replace(this.tag, this.tagsız);
       if (!this.eski.username.includes(this.tag)) return;
       if (this.tagsız === "") return uye.roles.remove(this.tagrol).catch();
+      let degisecek = nick.replace(this.tag, this.tagsız);
       await uye.roles.remove(this.tagrol).catch();
       await uye.setNickname(`${degisecek}`).catch();
     };
