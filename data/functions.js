@@ -137,9 +137,9 @@ const xd = [
   "Her şeyi bilen sen. Bilemedin bir beni",
   "Her şeyi gören sen. Göremedin mi beni?",
   "Her şeyi duyan sen. Duyamadın mı beni?",
-  "Ben olmasam bile hayat gülsün sana.",
-  "Tanrıyı cenneten gelip bizi kurtarmadığı için suçlamıyorum, çünkü hiçbir şeyi hak etmiyoruz.",
-  "Senin olanın yokluğu, bir alev gibi yaktı mı hiç seni?"
+  "Ben olmasam bile hayat gülsün sana.", 
+  "Prensese benim ol dedikçe daha çok uzaklaştı.",
+  "Tanrıyı cenneten gelip bizi kurtarmadığı için suçlamıyorum, çünkü hiçbir şeyi hak etmiyoruz.","Senin olanın yokluğu, bir alev gibi yaktı mı hiç seni?"
 ];
 ///////////////////////////////////////////////////
 function duzembed(msj) {

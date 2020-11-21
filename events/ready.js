@@ -1,15 +1,9 @@
 module.exports.help = { name: "ready" };
 
-class login { 
-  constructor(client) { 
-    this.client = client;
-  } 
-  log(guild) {
-    this.client.user.setStatus("idle"); console.log("(" + this.client.user.username + ") adlı hesapta [" + guild.name + "] adlı sunucuda giriş yapıldı."); 
-  } }
+class Login { constructor(client) { this.client = client; } log(guild) { this.client.user.setStatus("idle"); console.log("(" + this.client.user.username + ") adlı hesapta [" + guild.name + "] adlı sunucuda giriş yapıldı."); } }
 
 module.exports.event = (client = global.client, { sunucu, roles } = require("../config.json"), cfg = require("../config.json"), db = require("quick.db")) => {
-  new login(client).log(client.guilds.cache.get(sunucu));
+  new Login(client).log(client.guilds.cache.get(sunucu));
   setInterval(() => yasakliTag(client, sunucu, roles, cfg, db), client.getDate(2, "saat"));
   setInterval(() => chatEdit(client, sunucu, cfg.chats.gchat, cfg.snc.sncIsim, cfg.snc.tagRolIsim, cfg.tag.taglıTag), client.getDate(30, "dakika"));
 };
