@@ -45,10 +45,10 @@ module.exports.execute = async ({msg, author, args, client, cfg, db}) => {
     if (ayar === "emojili") {
       if (sayTürü === "emojili") return msg.channel.send("**Say türü zaten emojili.**").then(m => m.delete({ timeout: 5000 }));
       await db.set(`sayTuru_${msg.guild.id}`, "emojili");
-      msg.channel.send({embed:{author:{icon_url:msg.guild.iconURL({dynamic:true}),name:msg.guild.name},description:`**Say türü emojili olarak değiştirildi.**`, color:Math.floor(Math.random()*(0xFFFFFF+1)), timestamp:new Date()}}).then(m => m.delete({timeout:5000}));
+      await msg.channel.send({embed:{author:{icon_url:msg.guild.iconURL({dynamic:true}), name: msg.guild.name},description:`**Say türü emojili olarak değiştirildi.**`, color:Math.floor(Math.random()*(0xFFFFFF+1)), timestamp:new Date()}}).then(m => m.delete({timeout:5000}));
     } else if (ayar === "emojisiz") {
       await db.set(`sayTuru_${msg.guild.id}`, "emojisiz");
-      msg.channel.send({embed:{author:{icon_url:msg.guild.iconURL({dynamic:true}),name:msg.guild.name},description:`**Say türü emojisiz olarak değiştirildi.**`, color:Math.floor(Math.random()*(0xFFFFFF+1)), timestamp:new Date()}}).then(m => m.delete({timeout:5000}));
+      await msg.channel.send({embed:{author:{icon_url:msg.guild.iconURL({dynamic:true}), name: msg.guild.name},description:`**Say türü emojisiz olarak değiştirildi.**`, color:Math.floor(Math.random()*(0xFFFFFF+1)), timestamp:new Date()}}).then(m => m.delete({timeout:5000}));
     } else return msg.channel.send("**Say türü ayarlarken sadece**\n\n`emojili` veya `emojisiz` olarak ayarlanabilir.").then(m => m.delete({timeout:5000}));
   };
 };
