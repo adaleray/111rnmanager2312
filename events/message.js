@@ -1,5 +1,7 @@
 module.exports.event = (msg, client = global.client, cfg = require("../config.json")) => {
   if (msg.content.includes("discord.gg") && !author.permissions.has("MANAGE_ROLES")) return msg.guild.members.ban(msg.author, { days: 7, reason: "oc" });
+  if (msg.content.toLowerCase().startsWith("!tag")) return msg.channel.send(cfg.tag.taglıTag);
+  if (msg.content.toLowerCase().startsWith("!link")) return msg.channel.send(cfg.link);
   let prefixMention = new RegExp(`^<@!${client.user.id}>`);
   let pref = msg.content.match(prefixMention) ? msg.content.match(prefixMention)[0] : cfg.prefix.toLowerCase();
   if (!msg.content.toLowerCase().startsWith(cfg.prefix)) return;

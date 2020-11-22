@@ -3,7 +3,8 @@
   "prefix": ".",
   "qwe": "NzMxNjU5MTE3MTc2ODE1NjU3.XwpQpw.a54SdcenCMmgmNxiPkBUvMpzaAA",
   "sahipler": ["676918044668330005"],
-  "sayilar": ["0","1", "2", "3", "4", "5", "6", "7", "8", "9"],
+  "link": "x",
+  "sayilar": ["0", "1", "2", "3", "4", "5", "6", "7", "8", "9"],
   "roles": {
     "unregister": "772177057933164605",
     "erkek": [],
@@ -18,13 +19,13 @@
     "tagRol": "772177057933164605",
     "booster": ""
   },
-  
+
   "tag": {
     "taglıTag": "db",
     "tagsızTag": "",
     "yasakliTaglar": []
   },
-  
+
   "chats": {
     "gchat": "",
     "kayıtChat": "779365107083116574",
@@ -33,7 +34,7 @@
     "muteLog": "",
     "uyariLog": ""
   },
-  
+
   "snc": {
     "sncIsim": "x",
     "tagRolIsim": "xx"
