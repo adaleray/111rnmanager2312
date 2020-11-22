@@ -1,4 +1,5 @@
 module.exports = (client, cfg) => {
+  
   client.duzembed = (message) => {
     return {
       embed: {
@@ -56,20 +57,20 @@ module.exports = (client, cfg) => {
     if (!uye) return msg.channel.send("**Bir üye etiketlemelisin.**").then(m => m.delete({ timeout: 5000 }));
     if (uye.roles.cache.get(rolID)) {
       await uye.roles.remove(rolID).catch();
-      await msg.channel.send(duzembed(`**${uye} adlı üyeden <@&${rolID}> rolü alındı.**`)).then(m => m.delete({ timeout: 5000 }));
+      await msg.channel.send(client.duzembed(`**${uye} adlı üyeden <@&${rolID}> rolü alındı.**`)).then(m => m.delete({ timeout: 5000 }));
     } else {
       await uye.roles.add(rolID).catch();
-      await msg.channel.send(duzembed(`**${uye} adlı üyeye <@&${rolID}> rolü verildi.**`)).then(m => m.delete({ timeout: 5000 }));
+      await msg.channel.send(client.duzembed(`**${uye} adlı üyeye <@&${rolID}> rolü verildi.**`)).then(m => m.delete({ timeout: 5000 }));
     };
   } else if (tip === "custom") {
     if (!arr.includes(author.id)) return msg.channel.send("**Gerekli yetkiye sahip değilsin.**").then(m => m.delete({ timeout: 5000 }));
     if (!uye) return msg.channel.send("**Bir üye etiketlemelisin.**").then(m => m.delete({ timeout: 5000 }));
     if (uye.roles.cache.get(rolID)) {
       await uye.roles.remove(rolID).catch();
-      await msg.channel.send(duzembed(`**${uye} adlı üyeden <@&${rolID}> rolü alındı.**`)).then(m => m.delete({ timeout: 5000 }));
+      await msg.channel.send(client.duzembed(`**${uye} adlı üyeden <@&${rolID}> rolü alındı.**`)).then(m => m.delete({ timeout: 5000 }));
     } else {
       await uye.roles.add(rolID).catch();
-      await msg.channel.send(duzembed(`**${uye} adlı üyeye <@&${rolID}> rolü verildi.**`)).then(m => m.delete({ timeout: 5000 }));
+      await msg.channel.send(client.duzembed(`**${uye} adlı üyeye <@&${rolID}> rolü verildi.**`)).then(m => m.delete({ timeout: 5000 }));
       };
     };
   };
@@ -114,19 +115,31 @@ module.exports = (client, cfg) => {
       }
     };
   };
+  
+  client.xd = [
+    "Nefes alıp veriyoruz hepimizin sorunu başka...",
+    "Karışık duygularıma kör düğüm atarım...",
+    "Kahverengi gözlerin var ama gökyüzü gibi bakıyosun.",
+    "Herkes merak içinde ölümden sonra hayat var mı diye boşuna düşünürler sanki hayat varmış gibi ölümden önce.",
+    "Güne açan çiçekler gibiyiz, yalaaaaaaaaaaağn",
+    "Başka bir yer varsa orada tekrar görüşürüz belki yoksa da seni tanımak benim cennetimdi zaten.",
+    "Bir gün gelir aşk biter, insafsızca terk eder. Bütün bunların ardından sadece gözyaşı kalır.",
+    "Havam bozulmaya başladı yine. Gözlerim de dolmaya. Sanırım içimde bir yerlere sen yağdı gece gece...",
+    "Yalanlarımız güzel, inanması zevkli.",
+    "Çık hücrenden, ruhunu göster",
+    "Hiç bir melek ölmez ama sen bi kere dirilmedin.",
+    "Klasik oldu ama her şeye rağmen hayattayız yanımızda hatalarımız.",
+    "Niye küstahça bakışlara sabır ediyorum?",
+    "Silgiyle iz bıraktın, kalemle silinmedin.",
+    "Amacım kötü değil, istiyordum yardım ama dönülmez akşamların ufkunda kaldım",
+    "Hayattan ne istediğimi bilmiyorum aslında...",
+    "Sokiyim böyle dünyaya...",
+    "Her şeyi bilen sen. Bilemedin bir beni",
+    "Her şeyi gören sen. Göremedin mi beni?",
+    "Her şeyi duyan sen. Duyamadın mı beni?",
+    "Ben olmasam bile hayat gülsün sana.", 
+    "Prensese benim ol dedikçe daha çok uzaklaştı.",
+    "Tanrıyı cenneten gelip bizi kurtarmadığı için suçlamıyorum, çünkü hiçbir şeyi hak etmiyoruz.","Senin olanın yokluğu, bir alev gibi yaktı mı hiç seni?"
+  ];
 };
 ///////////////////////////////////////////////////
-
-///////////////////////////////////////////////////
-function duzembed(msj) {
-  return {
-    embed: {
-      description: msj,
-      timestamp: new Date(),
-      color: Math.floor(Math.random() * (0xFFFFFF + 1)),
-      footer: {
-        text: `${[global.client.xd[Math.floor(Math.random() * global.client.xd.length)]]}`
-      }
-    }
-  };
-};

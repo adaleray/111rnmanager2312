@@ -41,45 +41,45 @@ module.exports.operate = async ({msg, author, args, client, cfg, db}) => {
         `**${cfg.snc.sncIsim}: ${client.emojili(uyeSayisi)}               Online: ${client.emojili(onlineUye)}**\n\n            **${cfg.snc.tagRolIsim}: ${client.emojili(tagliUye)}**`
       );
     } else if (sayTürü === "emojiliEmbed") {
-      msg.channel.send({
-        embed: {
-          author: { 
-            icon_url: msg.guild.iconURL({dynamic: true}), name: msg.guild.name 
-          },
-          footer: {
-            text: `${[client.xd[Math.floor(Math.random() * client.xd.length)]]}`
-          },
-          timestamp: new Date(),
-          color: Math.floor(Math.random() * (0xFFFFFF + 1)),
-          description: `:white_small_square: **${cfg.snc.sncIsim} Ailesinin Toplam ${
-            client.emojili(uyeSayisi)
-          } Üyesi Bulunmakta.\n:white_small_square: Aktif ${
-            client.emojili(onlineUye)
-          } Kullanıcı Bulunmakta.\n:white_small_square: Tagımızı Alarak Ailemize Katılmış ${
-            client.emojili(tagliUye)
-          } Kişi Bulunmakta.\n:white_small_square: Sunucumuzda ${
-            client.emojili(boosterUye)
-          } Destekçi Bulunmakta.\n:white_small_square: Ses Kanallarında Toplam ${
-            client.emojili(sayi)
-          } Kişi Bulunmakta.**`
-        }
-      });
-    };
-  } else if (type === "ayarla") {
-    let ayar = args[1];
-    if (!ayar) return;
-    if (ayar === "emojili") {
-      if (sayTürü === "emojili") return msg.channel.send("**Say türü zaten emojili.**").then(m => m.delete({ timeout: 5000 }));
-      await db.set(`sayTuru_${msg.guild.id}`, "emojili");
-      await msg.channel.send({embed:{author:{icon_url:msg.guild.iconURL({dynamic:true}), name: msg.guild.name},description:`**Say türü emojili olarak değiştirildi.**`, color:Math.floor(Math.random()*(0xFFFFFF+1)), timestamp:new Date()}}).then(m => m.delete({timeout:5000}));
-    } else if (ayar === "emojisiz") {
-      await db.set(`sayTuru_${msg.guild.id}`, "emojisiz");
-      await msg.channel.send({embed:{author:{icon_url:msg.guild.iconURL({dynamic:true}), name: msg.guild.name},description:`**Say türü emojisiz olarak değiştirildi.**`, color:Math.floor(Math.random()*(0xFFFFFF+1)), timestamp:new Date()}}).then(m => m.delete({timeout:5000}));
-    } else if (ayar === "emojili-embed") {
-      await db.set(`sayTuru_${msg.guild.id}`, "emojiliEmbed");
+        msg.channel.send({
+          embed: {
+            author: { 
+              icon_url: msg.guild.iconURL({dynamic: true}), name: msg.guild.name 
+            },
+            footer: {
+              text: `${[client.xd[Math.floor(Math.random() * client.xd.length)]]}`
+            },
+            timestamp: new Date(),
+            color: Math.floor(Math.random() * (0xFFFFFF + 1)),
+            description: `:white_small_square: **${cfg.snc.sncIsim} Ailesinin Toplam ${
+              client.emojili(uyeSayisi)
+            } Üyesi Bulunmakta.\n:white_small_square: Aktif ${
+              client.emojili(onlineUye)
+            } Kullanıcı Bulunmakta.\n:white_small_square: Tagımızı Alarak Ailemize Katılmış ${
+              client.emojili(tagliUye)
+            } Kişi Bulunmakta.\n:white_small_square: Sunucumuzda ${
+              client.emojili(boosterUye)
+            } Destekçi Bulunmakta.\n:white_small_square: Ses Kanallarında Toplam ${
+              client.emojili(sayi)
+            } Kişi Bulunmakta.**`
+          }
+        });
+      };
+    } else if (type === "ayarla") {
+      let ayar = args[1];
+      if (!ayar) return;
+      if (ayar === "emojili") {
+        if (sayTürü === "emojili") return msg.channel.send("**Say türü zaten emojili.**").then(m => m.delete({ timeout: 5000 }));
+        await db.set(`sayTuru_${msg.guild.id}`, "emojili");
+        await msg.channel.send({embed:{author:{icon_url:msg.guild.iconURL({dynamic:true}), name: msg.guild.name},description:`**Say türü emojili olarak değiştirildi.**`, color:Math.floor(Math.random()*(0xFFFFFF+1)), timestamp:new Date()}}).then(m => m.delete({timeout:5000}));
+      } else if (ayar === "emojisiz") {
+        await db.set(`sayTuru_${msg.guild.id}`, "emojisiz");
+        await msg.channel.send({embed:{author:{icon_url:msg.guild.iconURL({dynamic:true}), name: msg.guild.name},description:`**Say türü emojisiz olarak değiştirildi.**`, color:Math.floor(Math.random()*(0xFFFFFF+1)), timestamp:new Date()}}).then(m => m.delete({timeout:5000}));
+      } else if (ayar === "emojili-embed") {
+        await db.set(`sayTuru_${msg.guild.id}`, "emojiliEmbed");
         await msg.channel.send({embed:{author:{icon_url:msg.guild.iconURL({dynamic:true}), name: msg.guild.name},description:`**Say türü emojili embed olarak değiştirildi.**`, color:Math.floor(Math.random()*(0xFFFFFF+1)), timestamp:new Date()}}).then(m => m.delete({timeout:5000}));
-    } else return msg.channel.send("**Say türü ayarlarken sadece**\n\n`emojili` veya `emojisiz` olarak ayarlanabilir.").then(m => m.delete({timeout:5000}));
-  };
+      } else return msg.channel.send("**Say türü ayarlarken sadece**\n\n`emojili`, `emojisiz` veya `emojili-embed` olarak ayarlanabilir.").then(m => m.delete({timeout:5000}));
+    };
 };
 
 module.exports.help = {
