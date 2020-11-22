@@ -1,12 +1,4 @@
-class Login { 
-  constructor({ client: client, sunucu: sunucu, chat: chat, sncIsim: sncIsim}) { 
-    this.client = client;
-  } 
-  log() {
-    this.client.user.setStatus("idle");
-    console.log("(" +this.client.user.username +") adlı hesapta [" +this.client.guilds.cache.get(this.sunucu).name +"] adlı sunucuda giriş yapıldı."); 
-  } 
-}
+class Login { constructor(client) { this.client = client; } log(guild) { this.client.user.setStatus("idle"); console.log("(" +this.client.user.username +") adlı hesapta [" +guild.name +"] adlı sunucuda giriş yapıldı."); } }
 
 class YasakliTag {
   constructor(client, sunucu, roles, cfg, db) {
