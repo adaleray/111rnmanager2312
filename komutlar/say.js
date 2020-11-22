@@ -5,7 +5,7 @@ module.exports.operate = async ({msg, author, args, client, cfg, db}) => {
   const uyeSayisi = msg.guild.memberCount;
   const tagliUye = msg.guild.members.cache.filter(u => u.user.username.includes(cfg.tag.taglıTag)).size || 0;
   const onlineUye = msg.guild.members.cache.filter(u => u.presence.status !== "offline").size;
-  const boosterUye = msg.guild.members.cache.filter(u => u.roles.cache.get(cfg.roles.booster)).size || "Rol Belirtilmedi";
+  const boosterUye = msg.guild.members.cache.filter(u => u.roles.cache.get(cfg.roles.booster)).size || 0;
   const type = args[0];
   msg.guild.channels.cache.filter(c => c.type === "voice").map(k => { 
     sayi += k.members.size
@@ -32,7 +32,7 @@ module.exports.operate = async ({msg, author, args, client, cfg, db}) => {
           color: Math.floor(Math.random() * (0xFFFFFF+1)),
           timestamp: new Date(),
           footer: {
-            text: ``
+            text: `${[client.xd[Math.floor(Math.random() * client.xd.length)]]}`
           }
         }
       });
@@ -43,17 +43,25 @@ module.exports.operate = async ({msg, author, args, client, cfg, db}) => {
     } else if (sayTürü === "emojiliEmbed") {
       msg.channel.send({
         embed: {
+          author: { 
+            icon_url: msg.guild.iconURL({dynamic: true}), name: msg.guild.name 
+          },
+          footer: {
+            text: `${[client.xd[Math.floor(Math.random() * client.xd.length)]]}`
+          },
+          timestamp: new Date(),
+          color: Math.floor(Math.random() * (0xFFFFFF + 1)),
           description: `:white_small_square: **${cfg.snc.sncIsim} Ailesinin Toplam ${
-          client.emojili(uyeSayisi)
-        } Üyesi Bulunmakta.\n:white_small_square: Aktif ${
-          client.emojili(onlineUye)
-        } Kullanıcı Bulunmakta.\n:white_small_square: Tagımızı Alarak Ailemize Katılmış ${
-          client.emojili(tagliUye)
-        } Kişi Bulunmakta.\n:white_small_square: Sunucumuzda ${
-          client.emojili(boosterUye)
-        } Destekçi Bulunmakta.\n:white_small_square: Ses Kanallarında Toplam ${
-          client.emojili(sayi)
-        } Kişi Bulunmakta.**`
+            client.emojili(uyeSayisi)
+          } Üyesi Bulunmakta.\n:white_small_square: Aktif ${
+            client.emojili(onlineUye)
+          } Kullanıcı Bulunmakta.\n:white_small_square: Tagımızı Alarak Ailemize Katılmış ${
+            client.emojili(tagliUye)
+          } Kişi Bulunmakta.\n:white_small_square: Sunucumuzda ${
+            client.emojili(boosterUye)
+          } Destekçi Bulunmakta.\n:white_small_square: Ses Kanallarında Toplam ${
+            client.emojili(sayi)
+          } Kişi Bulunmakta.**`
         }
       });
     };
