@@ -61,7 +61,11 @@ class MessageDelete {
   }
   
   snipe(db) {
-    db.set(`snipe_${this.sunucu}`, this.msg.content);
+    db.set(`snipe_${this.sunucu}`, {
+      content: this.msg.content,
+      kanal: this.msg.channel.id,
+      author: this.msg.author.id
+    });
   }
 }
 
