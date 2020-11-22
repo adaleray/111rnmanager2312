@@ -1,4 +1,5 @@
 module.exports.operate = async ({client, msg, args, author, uye}) => {
+  
   if (!author.permissions.has("ADMINISTRATOR")) return msg.channel.send('**Gerekli yetkiye sahip değilsin.**').then(m => m.delete({ timeout: 3000 }));
   if (!uye) return msg.channel.send("**Bir üye etiketlemelisin.**").then(m => m.delete({ timeout: 3000 }));
   if (!uye.voice.channel) return msg.channel.send("**Etiketlediğin üye bir ses kanalında bulunmuyor.**").then(m => m.delete({ timeout: 3000 }));
@@ -24,7 +25,7 @@ module.exports.operate = async ({client, msg, args, author, uye}) => {
       await uye.voice.setChannel(args[1]).catch(err => msg.channel.send(err.message));
       await msg.channel.send(client.nrmlembed(`**${uye} adlı  başarıyla <#${args[1]}> kanalına gönderildi.**`)).then(a => a.delete({ timeout: 5000 }));
     };
-}
+};
 
 module.exports.help = {
   name: "çek",

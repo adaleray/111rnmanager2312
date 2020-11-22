@@ -79,7 +79,7 @@ module.exports.operate = async ({msg, author, args, client, cfg, db}) => {
         await db.set(`sayTuru_${msg.guild.id}`, "emojiliEmbed");
         await msg.channel.send({embed:{author:{icon_url:msg.guild.iconURL({dynamic:true}), name: msg.guild.name},description:`**Say türü emojili embed olarak değiştirildi.**`, color:Math.floor(Math.random()*(0xFFFFFF+1)), timestamp:new Date()}}).then(m => m.delete({timeout:5000}));
       } else return msg.channel.send("**Say türü ayarlarken sadece**\n\n`emojili`, `emojisiz` veya `emojili-embed` olarak ayarlanabilir.").then(m => m.delete({timeout:5000}));
-    };
+   };
 };
 
 module.exports.help = {
