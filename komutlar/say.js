@@ -35,11 +35,11 @@ module.exports.operate = async ({msg, author, args, client, cfg, db}) => {
             text: `${[client.xd[Math.floor(Math.random() * client.xd.length)]]}`
           }
         }
-      });
+      }).then(m => m.delete({ timeout: 6000 }));
     } else if (sayTürü === "emojili") {
       msg.channel.send(
         `**${cfg.snc.sncIsim}: ${client.emojili(uyeSayisi)}               Online: ${client.emojili(onlineUye)}**\n\n            **${cfg.snc.tagRolIsim}: ${client.emojili(tagliUye)}**`
-      );
+      ).then(m => m.delete({ timeout: 6000 }));;
     } else if (sayTürü === "emojiliEmbed") {
         msg.channel.send({
           embed: {
@@ -63,7 +63,7 @@ module.exports.operate = async ({msg, author, args, client, cfg, db}) => {
               client.emojili(sayi)
             } Kişi Bulunmakta.**`
           }
-        });
+        }).then(m => m.delete({ timeout: 6000 }));
       };
     } else if (type === "ayarla") {
       let ayar = args[1];
