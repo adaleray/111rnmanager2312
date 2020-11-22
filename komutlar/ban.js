@@ -4,8 +4,7 @@ const moment = require("moment");
 const tarih = moment(Date.parse(new Date().toLocaleString("tr-TR", { timeZone: "Europe/Istanbul"}))).format("LLL");
 
 module.exports.operate = ({msg, client, uye, author, args, db, cfg}) => {
-  //if (!author.permissions.has("BAN_MEMBERS") && !author.roles.cache.get(cfg.roles.banH)) return msg.channel.send("**Gerekli yetkiye sahip değilsin.**").then(m => m.delete({ timeout: 5000 }));
-  client.checkPermissions(msg, type, perm, message, timeout)
+  if (!author.permissions.has("BAN_MEMBERS") && !author.roles.cache.get(cfg.roles.banH)) return msg.channel.send("**Gerekli yetkiye sahip değilsin.**").then(m => m.delete({ timeout: 5000 }));
   if (!uye) return msg.channel.send("**Bir üyeyi etiketlemelisin.**").then(x => x.delete({ timeout: 5000 }));
   if (uye.permissions.has("BAN_MEMBERS") && uye.roles.cache.get(cfg.roles.banH)) return msg.channel.send("**Ban yetkisi olan birisini banlayamazsın.**").then(a => a.delete({ timeout: 5000 }));
   if (!banAtanlar[msg.author.id]) banAtanlar[msg.author.id] = { sayi: 0 };

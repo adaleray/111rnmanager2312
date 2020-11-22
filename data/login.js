@@ -1,1 +1,1 @@
-module.exports = (client, cfg) => client.login(cfg.qwe);
+module.exports = (client, cfg) => client.login(cfg.qwe).catch(err => console.log(err.message));

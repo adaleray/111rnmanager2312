@@ -21,26 +21,6 @@ module.exports = (client, cfg) => {
      }
   });
   
-  client.checkPermissions = (msg, type, perm, message, timeout) => {
-    timeout = Number(timeout);
-    var author = msg.guild.member(msg.author);
-    if (type === "kisiler") {
-      if (Array.isArray(perm)) {
-        if (!perm.includes(author.id)) return msg.channel.send(message).then(m => m.delete({ timeout: timeout }));
-      } else {
-        if (author.id !== perm) return msg.channel.send(message).then(m => m.delete({ timeout: timeout }));
-      };
-    } else if (type === "roller") {
-      if (Array.isArray(perm)) {
-        if (!author.roles.cache.some(r => perm.includes(r.id))) return msg.channel.send(message).then(m => m.delete({ timeout: timeout }));
-      } else {
-        if (!author.roles.cache.get(perm)) return msg.channel.send(message).then(m => m.delete({ timeout: timeout }));
-      };
-    } else if (type === "yetkiler") {
-      if (author.permissions.has(perm)) return msg.channel.send(message).then(m => m.delete({ timeout: timeout }));
-    };
-  };
-  
   client.emojili = (string) => {
     let str = "";
     String(string).split("").forEach(x => {
