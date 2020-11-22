@@ -9,7 +9,17 @@ module.exports.operate = async ({client, msg, args, author, uye}) => {
   await msg.channel.send(client.nrmlembed(`Merhaba ${uye}. ${author} adlı üye bulunduğun sesli kanalına gelmek istiyor. Onaylıyor musun? `)).then(async msj => {
     await msj.react(evet);
     await msj.react(hayir);
-    msj.awaitReactions()
+    msj.awaitReactions(onlarFilterBenBeko, { max: 1, time: client.getDate(15, "saniye"), errors:["time"] }).then(async collected => {
+      let cvp = collected.first();
+      if (cvp.emoji.id === evet) {
+        await author.voice.setChannel(uye.voice.channel.id);
+        await author.send("Başarıyla <@" + uye + "> adlı üyenin odasına gittin.")
+          .catch(err => msg.channel.send(client.nrmlembed(`${author} adlı üye başarıyla ${uye} adlı üyenin odasına taşındı.`)).then(m => m.delete({ timeout: 3000 })));
+      } else {
+        await msj.delete();
+        await author.send("<@" + uye + "> adlı üye kanala gitme isteğinizi reddetti.").catch();
+      };
+    });
   });
 };
 
