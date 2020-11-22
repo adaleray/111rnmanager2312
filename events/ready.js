@@ -13,7 +13,7 @@ class YasakliTag {
     var yasakliTagKontrol = this.db.get(`yasakliTagKontrol_${this.sunucu}`) || "kapali";
     if (yasakliTagKontrol === "kapali") return;
     var yasakliTagRol = this.db.get(`yasakliTagRol_${this.sunucu}`) || this.cfg.roles.yasaklıTagRol;
-    var yasakliTag = this.db.get(`yasakliTag_${this.sunucu}`) || this.tag.yasakliTaglar;
+    var yasakliTag = this.db.get(`yasakliTag_${this.sunucu}`) || this.cfg.tag.yasakliTaglar;
     let guild = this.client.guilds.cache.get(this.sunucu);
     yasakliTag.forEach(tag => {
     guild.members.cache.filter(gmember => gmember.user.username.includes(tag))
@@ -39,25 +39,25 @@ class ChatEdit {
     let sayi = guild.memberCount;
     let taglı = guild.members.cache.filter(u => u.user.username.includes(this.tag)).size;
     let online = guild.members.cache.filter(u => u.presence.status !== "offline").size;
-      cookie = cookie + 1;
-      if (cookie === 1) {
-        kanal.edit({
-             topic: `**${this.sncIsim}: ${this.client.emojili(sayi)} Online: ${this.client.emojili(online)} ${this.tagrolIsim}: ${this.client.emojili(taglı)}**`
-        });
-      } else if (cookie === 2) {
-        kanal.edit({
-            topic: `**${this.sncIsim}: ${this.client.emojili(sayi)} Online: ${this.client.emojili(online)} ${this.tagrolIsim}: ${this.client.emojili(taglı)}**`
-        });
-      } else if (cookie === 3) {
-        kanal.edit({
-            topic: `**${this.sncIsim}: ${this.client.emojili(sayi)} Online: ${this.client.emojili(online)} ${this.tagrolIsim}: ${this.client.emojili(taglı)}**`
-        });
-      } else if (cookie === 4) {
-        cookie = 0;
-        kanal.edit({
-            topic: `**${this.sncIsim}: ${this.client.emojili(sayi)} Online: ${this.client.emojili(online)} ${this.tagrolIsim}: ${this.client.emojili(taglı)}**`
-        });
-      };
+    cookie = cookie + 1;
+    if (cookie === 1) {
+      kanal.edit({
+        topic: `**${this.sncIsim}: ${this.client.emojili(sayi)} Online: ${this.client.emojili(online)} ${this.tagrolIsim}: ${this.client.emojili(taglı)}**`
+      });
+    } else if (cookie === 2) {
+      kanal.edit({
+        topic: `**${this.sncIsim}: ${this.client.emojili(sayi)} Online: ${this.client.emojili(online)} ${this.tagrolIsim}: ${this.client.emojili(taglı)}**`
+      });
+    } else if (cookie === 3) {
+      kanal.edit({
+        topic: `**${this.sncIsim}: ${this.client.emojili(sayi)} Online: ${this.client.emojili(online)} ${this.tagrolIsim}: ${this.client.emojili(taglı)}**`
+      });
+    } else if (cookie === 4) {
+      cookie = 0;
+      kanal.edit({
+        topic: `**${this.sncIsim}: ${this.client.emojili(sayi)} Online: ${this.client.emojili(online)} ${this.tagrolIsim}: ${this.client.emojili(taglı)}**`
+      });
+    };
   }
 }
 
