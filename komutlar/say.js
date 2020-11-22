@@ -3,9 +3,9 @@ module.exports.execute = async ({msg, author, args, client, cfg, db}) => {
   let sayi = 0;
   const sayTürü = db.get(`sayTuru_${msg.guild.id}`) || "emojisiz";
   const uyeSayisi = msg.guild.memberCount;
-  const tagliUye = msg.guild.members.cache.filter(u => u.user.username.includes(cfg.tag.taglıTag)).size;
+  const tagliUye = msg.guild.members.cache.filter(u => u.user.username.includes(cfg.tag.taglıTag)).size || "Rol Belirtilmedi.";
   const onlineUye = msg.guild.members.cache.filter(u => u.presence.status !== "offline").size;
-  const boosterUye = msg.guild.members.cache.filter(u => u.roles.cache.get(cfg.roles.booster)).size || "Yok";
+  const boosterUye = msg.guild.members.cache.filter(u => u.roles.cache.get(cfg.roles.booster)).size || "Rol Belirtilmedi.";
   const type = args[0];
   msg.guild.channels.cache.filter(c => c.type === "voice").map(k => { 
     sayi += k.members.size
@@ -30,7 +30,8 @@ module.exports.execute = async ({msg, author, args, client, cfg, db}) => {
             icon_url: msg.guild.iconURL({dynamic:true}),
             name: msg.guild.name
           },
-          color: Math.floor(Math.random() * (0xFFFFFF+1))
+          color: Math.floor(Math.random() * (0xFFFFFF+1)),
+          timestamp: new Date()
         }
       });
     } else {
@@ -39,7 +40,16 @@ module.exports.execute = async ({msg, author, args, client, cfg, db}) => {
       );
     };
   } else if (type === "ayarla") {
-    
+    let ayar = args[1];
+    if (!ayar) return;
+    if (ayar === "emojili") {
+      if (sayTürü === "emojili") return msg.channel.send("**Say türü zaten emojili.**").then(m => m.delete({ timeout: 5000 }));
+      await db.set(`sayTuru_${msg.guild.id}`, "emojili");
+      await msg.channel.send({embed:{description:`**Say türü emojili olarak değiştirildi.**`, color:Math.floor(Math.random()*(0xFFFFFF+1)), timestamp:new Date()}}).then(m => m.delete({timeout:5000}));
+    } else if (ayar === "emojisiz") {
+      await db.set(`sayTuru_${msg.guild.id}`, "emojisiz");
+      await msg.channel.send({embed:{description:`**Say türü emojisiz olarak değiştirildi.**`, color:Math.floor(Math.random()*(0xFFFFFF+1)), timestamp:new Date()}}).then(m => m.delete({timeout:5000}));
+    } else return msg.channel.send("**Say türü ayarlarken sadece**\n\n`emojili` veya `emojisiz` olarak ayarlanabilir.").then(m => m.delete({timeout:5000}));
   };
 };
 
