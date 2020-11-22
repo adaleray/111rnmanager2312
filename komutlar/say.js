@@ -10,7 +10,6 @@ module.exports.operate = async ({msg, author, args, client, cfg, db}) => {
   msg.guild.channels.cache.filter(c => c.type === "voice").map(k => { 
     sayi += k.members.size
   });
-
   if (!type) {
     if (sayTürü === "emojisiz") {
       msg.channel.send({
