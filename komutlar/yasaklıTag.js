@@ -1,4 +1,4 @@
-module.exports.execute = async ({client, msg, author, args, db, cfg}) => {
+module.exports.operate = async ({client, msg, author, args, db, cfg}) => {
   if (!cfg.sahipler.includes(author.id)) return;
   const type = args[0].toLowerCase();
   const evet = "✅";

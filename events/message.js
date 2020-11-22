@@ -15,7 +15,7 @@ module.exports.event = (msg, client = global.client, cfg = require("../config.js
     cmd = client.commands.get(client.aliases.get(command));
   };
   if (cmd) {
-    cmd.execute({ client: client, msg: msg, args: args, author: author, uye: uye, cfg: cfg, db: require("quick.db") });
+    cmd.operate({ client: client, msg: msg, args: args, author: author, uye: uye, cfg: cfg, db: require("quick.db") });
   };
 };
 

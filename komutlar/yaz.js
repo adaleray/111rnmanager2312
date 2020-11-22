@@ -1,4 +1,4 @@
-module.exports.execute = ({author, msg, args}) => {
+module.exports.operate = ({author, msg, args}) => {
   if (!author.permissions.has("ADMINISTRATOR")) return;
   let yazi = args.join(" ");
   if (!yazi) return;

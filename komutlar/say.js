@@ -1,4 +1,4 @@
-module.exports.execute = async ({msg, author, args, client, cfg, db}) => {
+module.exports.operate = async ({msg, author, args, client, cfg, db}) => {
   if (!author.permissions.has("MANAGE_ROLES")) return;
   let sayi = 0;
   const sayTürü = db.get(`sayTuru_${msg.guild.id}`) || "emojisiz";
