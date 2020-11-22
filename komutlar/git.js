@@ -1,4 +1,4 @@
-module.exports.operate = async ({}) => {
+module.exports.operate = async ({client, msg, args, author, uye}) => {
   
 };
 
