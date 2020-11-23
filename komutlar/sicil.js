@@ -1,7 +1,7 @@
+const moment = require("moment");
+require("moment-duration-format");
 module.exports.operate = async ({client, msg, args, db}) => {
-  
   const ayar = args[1];
-  
   if (!ayar) {
     const kisi = msg.guild.member(msg.mentions.users.first()) || msg.guild.members.cache.get(args[0]) || msg.guild.member(msg.author);
     let sicil = db.get(`sicil_${kisi.id}`) || [];
@@ -10,9 +10,8 @@ module.exports.operate = async ({client, msg, args, db}) => {
   };
 };
 
-function today(date) {
-  var date = 
-}
+
+
 module.exports.help = {
   name: "sicil",
   alias: []
