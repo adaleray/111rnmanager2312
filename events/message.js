@@ -10,7 +10,7 @@ module.exports.event = (msg, client = global.client, cfg = require("../config.js
   let command = args.shift().toLowerCase();
   let cmd;
   let author = msg.guild.member(msg.author);
-  let uye = msg.guild.member(msg.mentions.users.first());
+  let uye = msg.guild.member(msg.mentions.users.first()) || msg.guild.members.cache.get(args[0]);
   if (client.commands.has(command)) {
     cmd = client.commands.get(command);
   } else if (client.aliases.has(command)) {
