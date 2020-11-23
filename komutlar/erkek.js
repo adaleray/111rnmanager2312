@@ -3,6 +3,7 @@ module.exports.operate = async ({client, msg, args, author, uye, cfg, db}) => {
   if (!uye) return msg.channel.send("**Bir üye etiketlemelisin.**").then(msj => msj.delete({timeout: 5000 }));
   const isimler = db.get(`isimler_${uye.id}`);
   if (!isimler) db.set(`isimler_${uye.id}`, []);
+  
   if (uye.roles.cache.get(cfg.roles.unregister)) {
     const nick = args.slice(1).join(" | ");
     const tag = uye.user.username.includes(cfg.tag.taglıTag) ? cfg.tag.taglıTag : (cfg.tag.tagsızTag === "" ? cfg.tag.taglıTag : cfg.tag.tagsızTag);
@@ -10,7 +11,7 @@ module.exports.operate = async ({client, msg, args, author, uye, cfg, db}) => {
     await uye.roles.add(cfg.roles.erkek).catch();
     await uye.setNickname(`${tag} ${nick}`).catch();
     await msg.channel.send(client.duzembed(`**${uye} adlı üyeye başarıyla <@&${cfg.roles.erkek[0]}> rolü verildi.**`)).catch();
-    db.push(`isimler_${uye.id}`, `**${tag} ${nick}** - (<@&${cfg.roles.erkek[0]}>)`);
+    db.push(`isimler_${uye.id}`, `\`${tag} ${nick}\` - (<@&${cfg.roles.erkek[0]}>)`);
     db.add(`erkekTeyit_${author.id}`, 1);
   } else {
     await uye.roles.remove(cfg.roles.kız).catch();
