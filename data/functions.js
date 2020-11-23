@@ -129,5 +129,12 @@ module.exports = (client, cfg) => {
     "Prensese benim ol dedikçe daha çok uzaklaştı.",
     "Tanrıyı cenneten gelip bizi kurtarmadığı için suçlamıyorum, çünkü hiçbir şeyi hak etmiyoruz.","Senin olanın yokluğu, bir alev gibi yaktı mı hiç seni?"
   ];
+  
+  client.clean = (text) => {
+	  if (typeof text !== "string")
+	  text = require("util").inspect(text, { depth: 0 })
+	  text = text.replace(/`/g, "`" + String.fromCharCode(8203)).replace(/@/g, "@" + String.fromCharCode(8203))
+	  return text;
+  };
 };
 ///////////////////////////////////////////////////
