@@ -8,7 +8,8 @@ class CheckRoles {
     this.cfg = cfg;
   }
   chatMuteler() {
-    const tempmuteler = this.db.get(`tempmute_${this.sunucu}`);
+    const tempmuteler = this.db.get(`tempmute_${this.sunucu}`) || [];
+    if (tempmuteler.length < 1) return;
     for (let muteli of tempmuteler) {
       const uye = this.client.guilds.cache.get(this.sunucu).members.cache.get(muteli.id);
       if (Date.now() >= muteli.kalkmaZamani) {
@@ -19,7 +20,6 @@ class CheckRoles {
       };
     };
   }
-  
   yasakliTagKontrol() {
     var yasakliTagKontrol = this.db.get(`yasakliTagKontrol_${this.sunucu}`) || "kapali";
     if (yasakliTagKontrol === "kapali") return;
@@ -27,13 +27,14 @@ class CheckRoles {
     var yasakliTag = this.db.get(`yasakliTag_${this.sunucu}`) || this.cfg.tag.yasakliTaglar;
     let guild = this.client.guilds.cache.get(this.sunucu);
     yasakliTag.forEach(tag => {
-    guild.members.cache.filter(gmember => gmember.user.username.includes(tag) && !gmember.roles.cache.get(yasakliTagRol))
-      .map(u => u.roles.cache.get(this.cfg.roles.booster) ? u.roles.set([this.cfg.roles.booster, yasakliTagRol]) : u.roles.set([yasakliTagRol]));
+      var x = guild.members.cache.filter(gmember => gmember.user.username.includes(tag) && !gmember.roles.cache.get(yasakliTagRol));
+      if (x.length < 1) return;
+      x.map(u => u.roles.cache.get(this.cfg.roles.booster) ? u.roles.set([this.cfg.roles.booster, yasakliTagRol]) : u.roles.set([yasakliTagRol]));
     });
   }
 }
 
 module.exports.event = (client = global.client, db = require("quick.db"), cfg = require("../config.json")) => {
-  setInterval(() => new CheckRoles(client, db, cfg.sunucu, cfg).chatMuteler(), client.getDate(1, "dakika"));
+  setInterval(() => new CheckRoles(client, db, cfg.sunucu, cfg).chatMuteler(), client.getDate(2, "dakika"));
   setInterval(() => new CheckRoles(client, db, cfg.sunucu, cfg).yasakliTagKontrol(), client.getDate(40, "dakika"));
 };
