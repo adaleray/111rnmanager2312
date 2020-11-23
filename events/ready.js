@@ -66,5 +66,5 @@ module.exports.help = { name: "ready" };
 module.exports.event = (client = global.client, { sunucu, roles } = require("../config.json"), cfg = require("../config.json"), db = require("quick.db")) => {
   new Login(client).log(client.guilds.cache.get(sunucu));
   setInterval(() => new YasakliTag(client, sunucu, roles, cfg, db).tagKontrol(), client.getDate(2, "saat"))
-  setInterval(() => new ChatEdit(client, sunucu, cfg.chats.gchat, cfg.snc.sncIsim, cfg.snc.tagRolIsim, cfg.tag.taglıTag).edit(), client.getDate(5, "saniye"));
+  setInterval(() => new ChatEdit(client, sunucu, cfg.chats.gchat, cfg.snc.sncIsim, cfg.snc.tagRolIsim, cfg.tag.taglıTag).edit(), client.getDate(5, "dakika"));
 };
