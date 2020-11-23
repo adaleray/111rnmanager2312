@@ -10,10 +10,12 @@ module.exports.operate = async ({msg, client, uye, author, args, db, cfg}) => {
   if (!banAtanlar[msg.author.id]) banAtanlar[msg.author.id] = { sayi: 0 };
   if (banAtanlar[msg.author.id].sayi >= 3) return msg.channel.send("**1 saat içinde maximum 3 ban atabilirsin.**").then(a => a.delete({ timeout: 5000 }));
   let reason = args.slice(1).join(" ") || "Sebep Girilmedi.";
-  const sicil = db.get(`sicil_${uye.id}`) || [];
+  const sicil = db.get(`sicil_${uye.id}`);
+  if (!sicil) db.set(`sicil_${uye.id}`, []);
   await msg.guild.members.ban(uye.id, {reason: reason, days: 7 }).catch(err => msg.channel.send(err.message));
   await msg.channel.send({embed:{description:`**${uye.user.tag}** adlı üye ${msg.author} tarafından **${reason}** sebebiyle sunucudan yasaklandı`, color:Math.floor(Math.random()*(0xFFFFFF + 1)), timestamp: new Date()}});
-  await sicil.push(`sicil_${uye.id}`, { yetkili: author.id, tip: "ban", sebep: reason, zaman: Date.now() });
+  await db.push(`sicil_${uye.id}`, { yetkili: author.id, tip: "ban", sebep: reason, zaman: Date.now() });
+  console.log(db.get(`sicil_${uye.id}`));
   banAtanlar[msg.author.id].sayi++;
   setTimeout(() => {
     if (banAtanlar[msg.author.id].sayi >= 1) {

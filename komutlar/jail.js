@@ -7,10 +7,10 @@ module.exports.operate = async ({client, msg, args, author, uye, cfg, db}) => {
   const reason = args.slice(1).join(" ") || "Sebep Girilmedi.";
   const sicil = db.get(`sicil_${uye.id}`);
   if (!uye.roles.cache.get(cfg.roles.jail)) {
-    if (!sicil) await db.set(`sicil_${uye.id}`, []);
+    if (!sicil) db.set(`sicil_${uye.id}`, []);
     await uye.roles.set(uye.roles.cache.has(cfg.roles.booster) ? [cfg.roles.jail, cfg.roles.booster] : [cfg.roles.jail]).catch();
     await msg.channel.send(client.nrmlembed(`${uye} adlı üye ${author} tarafından **${reason}** sebebiyle jaile atıldı.`)).then(m => m.delete({ timeout: 5000})).catch();
-    await sicil.push(`sicil_${uye.id}`, { yetkili: author.id, tip: "jail", sebep: reason, zaman: Date.now() });
+    await db.push(`sicil_${uye.id}`, { yetkili: author.id, tip: "jail", sebep: reason, zaman: Date.now() });
     if (uye.voice.channel) uye.voice.kick().catch();
     await console.log(db.get(`sicil_${uye.id}`));
   } else {
