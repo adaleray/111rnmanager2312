@@ -10,11 +10,12 @@ module.exports.operate = async ({client, msg, args, author, uye, cfg, db}, ms = 
   if (!uye.roles.cache.get(cfg.roles.muted)) {
     const sicil = db.get(`sicil_${uye.id}`);
     if (!sicil) db.set(`sicil_${uye.id}`, []);
+    if (!db.get(`tempmute_${msg.guild.id}`)) db.set(`tempmute_${msg.guild.id}`, []);
     await uye.roles.add(cfg.roles.muted).catch();
     await msg.channel.send(client.nrmlembed(`${uye} adlı üye ${author} tarafından **${reason}** sebebiyle \`${zaman}\` süresince susturulmuştur. `)).then(m => m.delete({timeout: 5000})).catch();
     await db.push(`sicil_${uye.id}`, { yetkili: author.id, tip: "mute", sebep: reason, zaman: Date.now() });
-    await db.add(`muteAtma_${author.id}`, 1);
-    db.push(`tempmute`, { id: uye.id, kalkmaZamani: Date.now() + ms(zaman) });
+    await db.push(`tempmute_${msg.guild.id}`, { id: uye.id, kalkmaZamani: Date.now() + ms(zaman) });
+    db.add(`muteAtma_${author.id}`, 1);
   } else {
     function onlarFilterBenBeko(r, u) { return [evet, hayir].includes(r.emoji.name) && u.id === author.id };
     await msg.channel.send(client.nrmlembed(`**${uye} adlı üye zaten muteli. Eğer işlemi onaylarsan üyeyi mutesini kaldıracağım.**`)).then(async m => {
@@ -23,7 +24,12 @@ module.exports.operate = async ({client, msg, args, author, uye, cfg, db}, ms = 
       m.awaitReactions(onlarFilterBenBeko, { max: 1, time: client.getDate(10, "saniye"), errors: ["time"] }).then(async collected => {
         let cvp = collected.first();
         if (cvp.emoji.name === evet) {
-          
+          const tempmuted = db.get(`tempmute_${msg.guild.id}`) || [];
+          for (let muted of tempmuted) {
+            db.set(`tempmute_${msg.guild.id}`, tempmuted.filter(x => x.id !== uye.id));
+            break;
+          };
+          await uye.roles.remove(cfg.roles)
         } else {
           m.delete();
           msg.delete();
