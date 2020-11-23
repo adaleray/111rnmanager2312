@@ -1,4 +1,5 @@
-module.exports.operate = async ({client, msg, args, author, uye, cfg, db}, ms = require("ms")) => {
+const ms = require("ms");
+module.exports.operate = async ({client, msg, args, author, uye, cfg, db}) => {
   const evet = "✅";
   const hayir = "❌";
 
