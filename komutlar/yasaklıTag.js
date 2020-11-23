@@ -73,7 +73,7 @@ module.exports.operate = async ({client, msg, author, args, db, cfg}) => {
   } else if (type === "kontrol") {
     let kontrol = db.get(`yasakliTagKontrol_${msg.guild.id}`) || "kapali";
     let type2 = args[1].toLowerCase();
-    if (type2 === "aç") {
+    if (["aç", "ac"].includes(type2)) {
       function BekoAslındaFilter(r, u) { return [evet, hayir].includes(r.emoji.name) && u.id === msg.author.id };
       if (kontrol === "acik") return msg.channel.send("**Yasaklı tag sistemi zaten açık.**").then(m => m.delete({ timeout: 5000 }));
       msg.channel.send({embed:{description:`**Yasaklı tag sistemini açmak istediğine emin misin?**\n\n\`Bu sistem açıldığıktan yasaklı taga düşecek taglar: ${db.get(`yasakliTag_${msg.guild.id}`).join(", ") || "Yasaklı Tag Yok !"}\``, timestamp: new Date(), color:Math.floor(Math.random() * (0xFFFFFF + 1))}}).then(async m => {
@@ -91,7 +91,7 @@ module.exports.operate = async ({client, msg, author, args, db, cfg}) => {
           };
         });
       });
-    } else if (type2 === "kapat") {
+    } else if (["kapa", "kapat"].includes(type2)) {
       function BekoAslındaFilter(r, u) { return [evet, hayir].includes(r.emoji.name) && u.id === msg.author.id };
       if (kontrol === "kapali") return msg.channel.send("**Yasaklı tag sistemi zaten kapalı.**").then(m => m.delete({ timeout: 5000 }));
       await msg.channel.send({embed:{description:`**Yasaklı tag sistemini kapatmak istediğine emin misin?**`, color:Math.floor(Math.random() * (0xFFFFFF + 1)), timestamp:new Date()}}).then(async m => {

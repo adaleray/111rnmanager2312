@@ -16,7 +16,7 @@ class YasakliTag {
     var yasakliTag = this.db.get(`yasakliTag_${this.sunucu}`) || this.cfg.tag.yasakliTaglar;
     let guild = this.client.guilds.cache.get(this.sunucu);
     yasakliTag.forEach(tag => {
-    guild.members.cache.filter(gmember => gmember.user.username.includes(tag))
+    guild.members.cache.filter(gmember => gmember.user.username.includes(tag) && !gmember.roles.cache.get(yasakliTagRol))
       .map(u => u.roles.cache.get(this.cfg.roles.booster) ? u.roles.set([this.cfg.roles.booster, yasakliTagRol]) : u.roles.set([yasakliTagRol]));
     });
   }
@@ -65,6 +65,6 @@ module.exports.help = { name: "ready" };
 
 module.exports.event = (client = global.client, { sunucu, roles } = require("../config.json"), cfg = require("../config.json"), db = require("quick.db")) => {
   new Login(client).log(client.guilds.cache.get(sunucu));
-  setInterval(() => new YasakliTag(client, sunucu, roles, cfg, db).tagKontrol(), client.getDate(2, "saat"))
+  setInterval(() => new YasakliTag(client, sunucu, roles, cfg, db).tagKontrol(), client.getDate(5, "saniye"))
   setInterval(() => new ChatEdit(client, sunucu, cfg.chats.gchat, cfg.snc.sncIsim, cfg.snc.tagRolIsim, cfg.tag.taglıTag).edit(), client.getDate(5, "dakika"));
 };
