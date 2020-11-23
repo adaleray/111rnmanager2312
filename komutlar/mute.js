@@ -29,7 +29,8 @@ module.exports.operate = async ({client, msg, args, author, uye, cfg, db}, ms = 
             db.set(`tempmute_${msg.guild.id}`, tempmuted.filter(x => x.id !== uye.id));
             break;
           };
-          await uye.roles.remove(cfg.roles)
+          await uye.roles.remove(cfg.roles.muted).catch();
+          msg.channel.send(client.nrmlembed(`${uye}** adlı üyenin mutesi başarıyla kaldırıldı.**`)).then(a => a.delete({ timeout: 5000 }));
         } else {
           m.delete();
           msg.delete();
