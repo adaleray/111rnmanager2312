@@ -18,7 +18,7 @@
   ],
   "roles": {
     "unregister": "772177057933164605",
-    "erkek": [],
+    "erkek": ["772177057933164605"],
     "kız": [],
     "botc": "",
     "yasaklıTagRol": "",
