@@ -11,8 +11,8 @@ module.exports.operate = async ({client, msg, args, author, uye, cfg, db}) => {
     await uye.roles.set(uye.roles.cache.has(cfg.roles.booster) ? [cfg.roles.jail, cfg.roles.booster] : [cfg.roles.jail]).catch();
     await msg.channel.send(client.nrmlembed(`${uye} adlı üye ${author} tarafından **${reason}** sebebiyle jaile atıldı.`)).then(m => m.delete({ timeout: 5000})).catch();
     await db.push(`sicil_${uye.id}`, { yetkili: author.id, tip: "jail", sebep: reason, zaman: Date.now() });
+    await db.add(`jailAtma_${author.id}`, 1);
     if (uye.voice.channel) uye.voice.kick().catch();
-    await console.log(db.get(`sicil_${uye.id}`));
   } else {
     function GaripBirAdamımEvet(r, u) { return [evet, hayir].includes(r.emoji.name) && u.id === author.id };
     await msg.channel.send({embed:{author:{icon_url: msg.guild.iconURL({dynamic:true}),name:msg.guild.name},description:`**${uye} adlı üye zaten jailde. Eğer işlemi onaylarsan üyeyi jailden çıkartacağım.**`, timestamp:new Date(),color:Math.floor(Math.random()*(0xFFFFFF+1))}}).then(async m => {

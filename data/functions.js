@@ -2,6 +2,8 @@ const { MessageEmbed } = require("discord.js");
 
 module.exports = (client, cfg) => {
   
+  client.favoriRenkler = new Array("#0b0067");
+  
   client.duzembed = (message) => {
     return {
       embed: {
