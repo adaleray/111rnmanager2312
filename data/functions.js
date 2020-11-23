@@ -98,6 +98,10 @@ module.exports = (client, cfg) => {
     };
   };
   
+  client.toDate = (date) => {
+    return new Date(date).toLocaleString("tr-TR", { timeZone})
+  };
+  
   client.xd = [
     "Nefes alıp veriyoruz hepimizin sorunu başka...",
     "Karışık duygularıma kör düğüm atarım...",
