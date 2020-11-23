@@ -99,7 +99,9 @@ module.exports = (client, cfg) => {
   };
   
   client.toDate = (date) => {
-    return new Date(date).toLocaleString("tr-TR", { timeZone})
+    var tarih = "";
+    tarih = new Date(date).toLocaleString("tr-TR", { timeZone: "Europe/Istanbul" }).replace("AM", "").replace("PM", "").replace(",", "");
+    return tarih;
   };
   
   client.xd = [
