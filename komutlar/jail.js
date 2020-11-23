@@ -5,13 +5,34 @@ module.exports.operate = async ({client, msg, args, author, uye, cfg, db}) => {
   if (uye.roles.cache.get(cfg.roles.jailH) && uye.permissions.has("MANAGE_ROLES")) return msg.channel.send("**Jail yetkisine sahip birisini jaile atamazsın.**").then(m => m.delete({timeout: 5000}));
   if (!uye) return msg.channel.send("**Bir üye etiketlemelisin.**").then(m => m.delete({ timeout: 5000 }));
   if (author.roles.highest.position <= uye.roles.highest.position) return msg.channel.send("**Belirttiğin kişi senden üstün veya onunla aynı yetkidesin!**").then(x => x.delete({timeout: 5000}));
-  function GaripBirAdamımEvet(r, u) { return [evet, hayir].includes(r.emoji.name) && u.id === author.id };
   const reason = args.slice(1).join(" ") || "Sebep Girilmedi.";
   const sicil = db.get(`sicil_${uye.id}`) || [];
   if (!uye.roles.cache.get(cfg.roles.jail)) {
     await uye.roles.set(uye.roles.cache.has(cfg.roles.booster) ? [cfg.roles.jail, cfg.roles.booster] : [cfg.roles.jail]).catch();
     await msg.channel.send(client.nrmlembed(`${uye} adlı üye ${author} tarafından **${reason}** sebebiyle jaile atıldı.`)).then(m => m.delete({ timeout: 5000})).catch();
-  } else {};
+    await sicil.push(`sicil_${uye.id}`, { yetkili: author.id, tip: "jail", sebep: reason, zaman: Date.now() });
+    if (uye.voice.channel) uye.voice.kick().catch();
+  } else {
+    function GaripBirAdamımEvet(r, u) { return [evet, hayir].includes(r.emoji.name) && u.id === author.id };
+    await msg.channel.send({embed:{author:{icon_url: msg.guild.iconURL({dynamic:true}),name:msg.guild.name},description:`**${uye} adlı üye zaten jailde. Eğer işlemi onaylarsan üyeyi jailden çıkartacağım.**`, timestamp:new Date(),color:Math.floor(Math.random()*(0xFFFFFF+1))}}).then(async m => {
+      await m.react(evet);
+      await m.react(hayir);
+      m.awaitReactions(GaripBirAdamımEvet,{max:1,time:client.getDate(20, "saniye"),errors:["time"]}).then(async collected => {
+        let cvp = collected.first();
+        if (cvp.emoji.name === evet) {
+          await uye.roles.remove(cfg.roles.jail).catch();
+          await uye.roles.add(cfg.roles.unregister).catch();
+          await msg.channel.send(client.nrmlembed(`**${uye} adlı üye başarıyla jailden çıkarıldı.**`)).catch();
+          await m.delete().catch();
+          await msg.delete().catch();
+        } else {
+          await msg.channel.send(client.nrmlembed(`**Komut başarıyla iptal edildi.**`)).then(m => m.delete({ timeout: 5000 }));
+          m.delete().catch();
+          msg.delete().catch();
+        };
+      }).catch(err => [m.delete(), msg.delete()]);
+    });
+  };
 };
 
 module.exports.help = {
