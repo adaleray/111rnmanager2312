@@ -1,5 +1,7 @@
 module.exports.operate = async ({client, msg, args, author, uye, cfg, db}, ms = require("ms")) => {
-  
+  const evet = "✅";
+  const hayir = "❌";
+
   if (!author.roles.cache.get(cfg.roles.muteH) && !author.permissions.has("MANAGE_ROLES")) return msg.channel.send("**Gerekli yetkiye sahip değilsin.**").then(m => m.delete({ timeout: 5000 }));
   if (!uye) return msg.channel.send("**Bir üye etiketlemelisin.**").then(m => m.delete({ timeout: 5000 }));
   const zaman = args[1];
@@ -11,9 +13,24 @@ module.exports.operate = async ({client, msg, args, author, uye, cfg, db}, ms = 
     await uye.roles.add(cfg.roles.muted).catch();
     await msg.channel.send(client.nrmlembed(`${uye} adlı üye ${author} tarafından **${reason}** sebebiyle \`${zaman}\` süresince susturulmuştur. `)).then(m => m.delete({timeout: 5000})).catch();
     await db.push(`sicil_${uye.id}`, { yetkili: author.id, tip: "mute", sebep: reason, zaman: Date.now() });
-    db.add(`muteAtma_${author.id}`, 1);
+    await db.add(`muteAtma_${author.id}`, 1);
+    db.push(`tempmute`, { id: uye.id, kalkmaZamani: Date.now() + ms(zaman) });
   } else {
-    
+    function onlarFilterBenBeko(r, u) { return [evet, hayir].includes(r.emoji.name) && u.id === author.id };
+    await msg.channel.send(client.nrmlembed(`**${uye} adlı üye zaten muteli. Eğer işlemi onaylarsan üyeyi mutesini kaldıracağım.**`)).then(async m => {
+      await m.react(evet);
+      await m.react(hayir);
+      m.awaitReactions(onlarFilterBenBeko, { max: 1, time: client.getDate(10, "saniye"), errors: ["time"] }).then(async collected => {
+        let cvp = collected.first();
+        if (cvp.emoji.name === evet) {
+          
+        } else {
+          m.delete();
+          msg.delete();
+          msg.channel.send(client.nrmlembed(`**Komut başarıyla iptal edildi.**`)).then(m => m.delete({ timeout: 5000 }));
+        };
+      }).catch(err => [msg.delete(), m.delete()]);
+    });
   };
 };
 
