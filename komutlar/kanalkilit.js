@@ -1,4 +1,4 @@
-module.exports.operate = async ({msg, author}, locked = new Set()) => {
+module.exports.operate = async ({msg, author}) => {
  
   if (!author.permissions.has("ADMINISTRATOR")) return;
   if (!locked[msg.channel.id]) locked[msg.channel.id] = {

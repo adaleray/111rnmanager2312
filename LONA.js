@@ -8,6 +8,7 @@ client.commands = new Map();
 client.aliases = new Map();
 client.cezalilar = new Set();
 client.cmuteliler = new Set();
+client.locked = new Set();
 global.client = client;
 
 require("./data/functions.js")(client, cfg);

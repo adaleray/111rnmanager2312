@@ -21,6 +21,7 @@ module.exports.event = async (msg, db = require("quick.db"), parsems = require("
   let zaman = await db.fetch(`afk-zaman_${kullanıcı.id}, ${msg.guild.id}`);
   let süre = parsems(Date.now() - zaman);
   let sebep = await db.fetch(`afk_${kullanıcı.id}, ${msg.guild.id}`);
+  if (sebep.includes("discord.gg")) return;
   if (await db.fetch(`afk_${msg.mentions.users.first().id}, ${msg.guild.id}`)) {
     if (süre.days !== 0) {
       msg.channel.send(
