@@ -1,5 +1,5 @@
 module.exports.operate = ({client, msg, args}) => {
-  if (msg.channel.id !== "779365107083116574") return msg.channel.send("<#776724179788890121>");
+  if (msg.channel.id !== "776724179788890121") return msg.channel.send("<#776724179788890121>");
   let kullanici = msg.mentions.users.first() || client.users.cache.get(args[0]) || msg.author;
   let avatar = kullanici.avatarURL({ dynamic: true, size: 2048 });
   msg.channel.send({
