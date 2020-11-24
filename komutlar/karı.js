@@ -4,7 +4,7 @@ module.exports.operate = async ({client, msg, args, author, uye, cfg, db}) => {
   const isimler = db.get(`isimler_${uye.id}`);
   const topTeyit = db.get(`topteyit_${msg.guild.id}`);
   if (!isimler) db.set(`isimler_${uye.id}`, []);
-  if (!topTeyit) db.set(`topteyit_${msg.guild.id}`, []);
+  if (!topTeyit) db.set(`topteyit_${msg.guild.id}`, [{id: author.id, sayi: 1}]);
   if (uye.roles.cache.get(cfg.roles.unregister)) {
     const nick = args.slice(1).join(" | ");
     const tag = uye.user.username.includes(cfg.tag.taglıTag) ? cfg.tag.taglıTag : (cfg.tag.tagsızTag === "" ? cfg.tag.taglıTag : cfg.tag.tagsızTag);
@@ -13,8 +13,8 @@ module.exports.operate = async ({client, msg, args, author, uye, cfg, db}) => {
     await uye.setNickname(`${tag} ${nick}`).catch();
     await msg.channel.send(client.duzembed(`**${uye} adlı üyeye başarıyla <@&${cfg.roles.kız[0]}> rolü verildi.**`)).catch();
     db.push(`isimler_${uye.id}`, `**${tag} ${nick}** - (<@&${cfg.roles.kız[0]}>)`);
-    db.add(`karıTeyit_${author.id}`, 1);
-    db.push(`topteyit_${msg.guild.id}`, {  })
+    db.add(`teyit.${author.id}.kiz`, 1);
+    
   } else {
     await uye.roles.remove(cfg.roles.erkek).catch();
     await uye.roles.add(cfg.roles.kız).catch();
