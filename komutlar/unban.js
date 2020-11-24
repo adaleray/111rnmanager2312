@@ -6,7 +6,7 @@ module.exports.operate = async ({client, msg, args, author}) => {
   if (user) {
     let reason = args.slice(1).join(" ") || "Sebep Girilmedi";
     msg.guild.members.unban(user.id).catch(err => {
-      msg.channel.send({ embed: { description: "**Belirtilen ID'de bir yasaklama bulunamadı.**", color: Math.floor(Math.random() * (0xFFFFFF + 1)), timestamp: new Date()}}).then(m => m
+      msg.channel.send({ embed: { description: "**Belirtilen ID'de bir yasaklama bulunamadı.**", color: client.favoriRenkler[Math.floor(Math.random() * client.favoriRenkler.length)], timestamp: new Date()}}).then(m => m
       .delete({ timeout: 3000 }));
     });
     banLog.send(client.nrmlembed(`${user.id} ID'li üyenin yasaklaması ${author} tarafından kaldırıldı.`));

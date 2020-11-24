@@ -15,7 +15,7 @@ module.exports.operate = async ({client, msg, args, author, uye, cfg, db}) => {
         icon_url:msg.guild.iconURL({dynamic:true})
       },
       description: `${kullanici} - (\`${kullanici.id}\`) **adlı üyenin yetkili durumu:**\n\n**Kayıt Edilen Erkek Sayısı: ${client.emojili(erkek)}\nKayıt Edilen Kız Sayısı: ${client.emojili(kız)}\nToplam Kayıt Sayısı: ${client.emojili(toplam)}\nAtılan Ban Sayısı: ${client.emojili(ban)}\n\Atılan Mute Sayısı: ${client.emojili(mute)}\nAtılan Jail Sayısı: ${client.emojili(jail)}**`,
-      color: Math.floor(Math.random() * (0xFFFFFF + 1)),
+      color: client.favoriRenkler[Math.floor(Math.random() * client.favoriRenkler.length)],
       timestamp: new Date()
     }
   });

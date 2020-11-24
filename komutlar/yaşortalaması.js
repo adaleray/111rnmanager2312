@@ -13,7 +13,7 @@ module.exports.operate = async ({client, msg, args, cfg, author}) => {
   let ses = members.filter(member => member.voice.channel && member.nickname && member.nickname.includes('|') && !isNaN(member.nickname.split('| ')[1] || "")).map(member => Number(member.nickname.split('| ')[1]));
   msg.channel.send({
    embed: { 
-     description:`\`Sunucu Yaş Ortalaması:\` ${client.emojili(`${ortalama(genel)}`)}\n\`Erkek:\` ${client.emojili(`${ortalama(erkek)}`)}\n\`Kız:\` ${client.emojili(`${ortalama(kiz)}`)}\n\`Ekip:\` ${client.emojili(`${ortalama(tagli)}`)}\n\`Ses:\` ${client.emojili(`${ortalama(ses)}`)}`, 
+     description: `\`Sunucu Yaş Ortalaması:\` ${client.emojili(`${ortalama(genel)}`)}\n\`Erkek:\` ${client.emojili(`${ortalama(erkek)}`)}\n\`Kız:\` ${client.emojili(`${ortalama(kiz)}`)}\n\`Ekip:\` ${client.emojili(`${ortalama(tagli)}`)}\n\`Ses:\` ${client.emojili(`${ortalama(ses)}`)}`, 
      color: client.favoriRenkler[Math.floor(Math.random() * client.favoriRenkler.length)],
      timestamp: new Date(), 
      author: { name: msg.guild.name, icon_url: msg.guild.iconURL({dynamic:true})}
