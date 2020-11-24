@@ -1,4 +1,4 @@
-module.exports.event = async (uye, client = global.client, cfg = require("../config.json"), db = require("quick.db")) => {
+module.exports.event = async (uye, client = global.client, cfg = require("../config.json"), db = require("quick.db"), moment = require("moment")) => {
   const yasakliTag = db.get(`yasakliTag_${uye.guild.id}`) || cfg.tag.yasakliTaglar;
   const yasakliTagRol = db.get(`yasakliTagRol_${uye.guild.id}`) || cfg.roles.yasaklıTagRol;
   const fakeRol = cfg.roles.fakeRol;
@@ -40,7 +40,13 @@ module.exports.event = async (uye, client = global.client, cfg = require("../con
     await uye.roles.add(cfg.roles.unregister);
     await uye.setNickname(`${tag} İsim | yaş`);
     await uye.guild.channels.cache.get(cfg.chats.kayıtChat).send(
-      `qwe`
+      `<a:happ:777712458705141770> • ${
+      uye
+      } Hoş Geldin! Seninle Birlikte ${
+      client.emojili(uye.guild.memberCount)
+      } Kişiyiz!\n<a:tac:777352088686166036> • Kaydını Yaptırmak İçin Herhangi Bir Teyit Odasına Girmen Yeterlidir!\n<a:kalp1:777352099746676756> • Tagımızı Alıp Bize Destek Olabilirsin.\n<a:guardianshac:777460993310851082> • Hesabın Oluşturulma Tarihi: ${
+      moment(uye.user.createdAt).format("YYY/MM/DD HH:mm:ss")
+      }\n<a:sonsuz:777712460316540958> • <@&778628308790280192> sizle ilgilenecektir.`
     ).catch();
   };
 };
