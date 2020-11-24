@@ -6,7 +6,7 @@ module.exports.operate = async ({client, msg, args, author, uye, cfg, db}) => {
   for (var i = 0; i < isimler.length; i++) {
     arr.push(`\`${i + 1}.\` ${isimler[i]}`);
   };
-  msg.channel.send({embed:{author:{name: msg.guild.name, icon_url:msg.guild.iconURL({dynamic:true})},description:arr.join("\n"), color:Math.floor(Math.random()*(0xFFFFFF+1)), timestamp:new Date()}});
+  msg.channel.send({embed:{author:{name: msg.guild.name, icon_url:msg.guild.iconURL({dynamic:true})},description:arr.join("\n"), color: client.favoriRenkler[Math.floor(Math.random() * client.favoriRenkler.length)], timestamp:new Date()}});
 };
 
 module.exports.help = {

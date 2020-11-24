@@ -2,13 +2,13 @@ const { MessageEmbed } = require("discord.js");
 
 module.exports = (client, cfg) => {
   
-  client.favoriRenkler = new Array("#0b0067");
+  client.favoriRenkler = new Array("#0b0067", "#4a0038", "#07052a", "#1f0524");
   
   client.duzembed = (message) => {
     return {
       embed: {
         description: message,
-        color: Math.floor(Math.random() * (0xFFFFFF + 1)),
+        color: client.favoriRenkler[Math.floor(Math.random() * client.favoriRenkler.length)],
         timestamp: new Date(),
         footer: {
           text: `${[client.xd[Math.floor(Math.random() * client.xd.length)]]}`
@@ -82,7 +82,7 @@ module.exports = (client, cfg) => {
       embed: {
         description: message,
         timestamp: new Date(),
-        color: Math.floor(Math.random() * (0xffffff + 1))
+        color: client.favoriRenkler[Math.floor(Math.random() * client.favoriRenkler.length)]
       }
     };
   };
@@ -92,7 +92,7 @@ module.exports = (client, cfg) => {
       embed: {
         description: message,
         timestamp: new Date(),
-        color: Math.floor(Math.random() * (0xffffff + 1)),
+        color: client.favoriRenkler[Math.floor(Math.random() * client.favoriRenkler.length)],
         footer: {
           text: `Bugün saat:`
         }

@@ -14,7 +14,7 @@ module.exports.operate = async ({msg, client, uye, author, args, db, cfg}) => {
   const sicil = db.get(`sicil_${uye.id}`);
   if (!sicil) db.set(`sicil_${uye.id}`, []);
   await msg.guild.members.ban(uye.id, {reason: reason, days: 7 }).catch(err => msg.channel.send(err.message));
-  await msg.channel.send({embed:{description:`**${uye.user.tag}** adlı üye ${msg.author} tarafından **${reason}** sebebiyle sunucudan yasaklandı`, color:Math.floor(Math.random()*(0xFFFFFF + 1)), timestamp: new Date()}});
+  await msg.channel.send({embed:{description:`**${uye.user.tag}** adlı üye ${msg.author} tarafından **${reason}** sebebiyle sunucudan yasaklandı`, color:client.favoriRenkler[Math.floor(Math.random() * client.favoriRenkler.length)], timestamp: new Date()}});
   await db.push(`sicil_${uye.id}`, { yetkili: author.id, tip: "ban", sebep: reason, zaman: Date.now() });
   await db.add(`banAtma_${author.id}`, 1);
   console.log(db.get(`sicil_${uye.id}`));

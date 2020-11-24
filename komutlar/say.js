@@ -29,7 +29,7 @@ module.exports.operate = async ({msg, author, args, client, cfg, db}) => {
             icon_url: msg.guild.iconURL({dynamic:true}),
             name: msg.guild.name
           },
-          color: Math.floor(Math.random() * (0xFFFFFF+1)),
+          color: client.favoriRenkler[Math.floor(Math.random() * client.favoriRenkler.length)],
           timestamp: new Date(),
           footer: {
             text: `${[client.xd[Math.floor(Math.random() * client.xd.length)]]}`
@@ -50,7 +50,7 @@ module.exports.operate = async ({msg, author, args, client, cfg, db}) => {
               text: `${[client.xd[Math.floor(Math.random() * client.xd.length)]]}`
             },
             timestamp: new Date(),
-            color: Math.floor(Math.random() * (0xFFFFFF + 1)),
+            color: client.favoriRenkler[Math.floor(Math.random() * client.favoriRenkler.length)],
             description: `:white_small_square: **${cfg.snc.sncIsim} Ailesinin Toplam ${
               client.emojili(uyeSayisi)
             } Üyesi Bulunmakta.\n:white_small_square: Aktif ${

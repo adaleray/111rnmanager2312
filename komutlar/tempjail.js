@@ -20,7 +20,7 @@ module.exports.operate = async ({client, msg, args, author, uye, cfg, db}) => {
     if (uye.voice.channel) uye.voice.kick().catch();
   } else {
     function GaripBirAdamımEvet(r, u) { return [evet, hayir].includes(r.emoji.name) && u.id === author.id };
-    await msg.channel.send({embed:{author:{icon_url: msg.guild.iconURL({dynamic:true}),name:msg.guild.name},description:`**${uye} adlı üye zaten jailde. Eğer işlemi onaylarsan üyeyi jailden çıkartacağım.**`, timestamp:new Date(),color:Math.floor(Math.random()*(0xFFFFFF+1))}}).then(async m => {
+    await msg.channel.send({embed:{author:{icon_url: msg.guild.iconURL({dynamic:true}),name:msg.guild.name},description:`**${uye} adlı üye zaten jailde. Eğer işlemi onaylarsan üyeyi jailden çıkartacağım.**`, timestamp:new Date(),color:1))}}).then(async m => {
       await m.react(evet);
       await m.react(hayir);
       m.awaitReactions(GaripBirAdamımEvet,{max:1,time:client.getDate(20, "saniye"),errors:["time"]}).then(async collected => {
