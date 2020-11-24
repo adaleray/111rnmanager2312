@@ -1,14 +1,15 @@
-module.exports.operate = async ({client, msg, cfg, db}) => {
+module.exports.operate = async ({client, msg, args, cfg, db}) => {
   let data = db.get("teyit") || {};
   var arr = Object.keys(data);
+  var sayi = args[0] || 10;
   let list = arr.filter(a => msg.guild.members.cache.get(a)).sort((a, b) => {
     Number((data[b].erkek || 0) + (data[b].kiz || 0)) - Number((data[a].erkek || 0) + (data[a].kiz || 0))
-  }).map((value, i) => `\`${i + 1}.\` ${msg.guild.members.cache.get(value)} | \`${(data[value].erkek || 0) + (data[value].kiz || 0)} teyit\``).slice(0, 10);
+  }).map((value, i) => `\`${i + 1}.\` ${msg.guild.members.cache.get(value)} | \`${(data[value].erkek || 0) + (data[value].kiz || 0)} teyit\``).slice(0, sayi);
   
   msg.channel.send({
     embed: {
       author: { name: msg.guild.name, icon_url: msg.guild.iconURL({dynamic:true}) },
-      description: `**En çok teyit yapan 10 kişi:**\n\n${list.join("\n") || "Yok !"}`,
+      description: `**En çok teyit yapan \`${sayi}\` kişi:**\n\n${list.join("\n") || "Yok !"}`,
       color: client.favoriRenkler[Math.floor(Math.random() * client.favoriRenkler.length)],
       timestamp: new Date()
     }

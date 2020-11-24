@@ -26,12 +26,10 @@ class CheckRoles {
     for (let jail of tempjailler) {
       const uye = this.client.guilds.cache.get(this.sunucu).members.cache.get(jail.id);
       if (Date.now() >= jail.kalkmaZamani) {
-        this.db.set(`tempmute_${this.sunucu}`, tempjailler.filter(x => x.id !== jail.id));
-        if (uye && uye.roles.cache.get(this.cfg.roles.jail)) {
-         await uye.roles.remove(this.cfg.jail);
-        };
+        this.db.set(`tempj_${this.sunucu}`, tempjailler.filter(x => x.id !== jail.id));
+        if (uye && uye.roles.cache.get(this.cfg.roles.jail)) uye.roles.set(uye.roles.cache.get(this.cfg.roles.booster) ? [this.cfg.roles.booster, this.cfg.roles.unregister] : [this.cfg.roles.unregister]);
       } else {
-        if (uye && !uye.roles.cache.get(this.cfg.roles.jail)) uye.roles.set(uye.roles.cache.get(this.cfg.booster) ? [this.cfg.booster, this.cfg.jail] : [this.cfg.jail]);
+        if (uye && !uye.roles.cache.get(this.cfg.roles.jail)) uye.roles.set(uye.roles.cache.get(this.cfg.roles.booster) ? [this.cfg.roles.booster, this.cfg.roles.jail] : [this.cfg.roles.jail]);
       };
     };
   }
@@ -52,5 +50,5 @@ class CheckRoles {
 module.exports.event = (client = global.client, db = require("quick.db"), cfg = require("../config.json")) => {
   setInterval(() => new CheckRoles(client, db, cfg.sunucu, cfg).chatMuteler(), client.getDate(3, "dakika"));
   setInterval(() => new CheckRoles(client, db, cfg.sunucu, cfg).yasakliTagKontrol(), client.getDate(37, "dakika"));
-  setInterval(() => new CheckRoles(client, db, cfg.sunucu, cfg).tempJailler(), client.getDate(1, "saniye"));
+  setInterval(() => new CheckRoles(client, db, cfg.sunucu, cfg).tempJailler(), client.getDate(1, "saat")+client.getDate(47, "dakika"));
 };
