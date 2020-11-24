@@ -13,7 +13,12 @@ module.exports.operate = async ({client, msg, args, author, cfg}) => {
     await msg.channel.send(`\`${ytler.size}\` üye kanala çekiliyor.`);
     ytler.map(user => user.voice.setChannel(kanal));
   } else if (tip === "katıldı") {
-    
+    let tip2 = args[1];
+    if (["dağıt", "ver"].includes(tip2)) {
+      msg.channel.send({})
+    } else if (["al", "topla"].includes(tip2)) {
+      
+    };
   };
 };
 
