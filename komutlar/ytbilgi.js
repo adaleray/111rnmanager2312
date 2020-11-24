@@ -7,13 +7,14 @@ module.exports.operate = async ({client, msg, args, author, uye, cfg, db}) => {
   const jail = db.get(`jailAtma_${kullanici.id}`) || 0;
   const mute = db.get(`muteAtma_${kullanici.id}`) || 0;
   const ban = db.get(`banAtma_${kullanici.id}`) || 0;
+  let toplam = erkek + kız;
   msg.channel.send({
     embed: { 
       author: {
         name: msg.guild.name,
         icon_url:msg.guild.iconURL({dynamic:true})
       },
-      description: `${kullanici} - (\`${kullanici.id}\`) **adlı üyenin yetkili durumu:**\n\n\`Kayıt Edilen Erkek Sayısı:\` **${erkek}**\n\`Kayıt Edilen Kız Sayısı:\` **${kız}**\n\`Atılan Ban Sayısı:\` **${ban}**\n\`Atılan Mute Sayısı:\` **${mute}**\n\`Atılan Jail Sayısı:\` **${jail}**`,
+      description: `${kullanici} - (\`${kullanici.id}\`) **adlı üyenin yetkili durumu:**\n\n**Kayıt Edilen Erkek Sayısı: ${client.emojili(erkek)}\nKayıt Edilen Kız Sayısı: ${client.emojili(kız)}\nToplam Kayıt Sayısı: ${client.emojili(toplam)}\nAtılan Ban Sayısı: ${client.emojili(ban)}\n\Atılan Mute Sayısı: ${client.emojili(mute)}\nAtılan Jail Sayısı: ${client.emojili(jail)}**`,
       color: Math.floor(Math.random() * (0xFFFFFF + 1)),
       timestamp: new Date()
     }
