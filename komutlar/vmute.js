@@ -1,6 +1,6 @@
 const ms = require("ms");
 module.exports.operate = async ({client, msg, args, author, uye, cfg, db}) => {
-  if (!author.permissions.has("MANAGE_ROLES") && !author.roles.cache.get(cfg.roles.jailH)) return msg.channel.send("**Gerekli yetkiye sahip değilsin.**").then(m => m.delete({timeout: 5000}));
+  if (!author.permissions.has("MANAGE_ROLES") && !author.roles.cache.get(cfg.roles.vmuteH)) return msg.channel.send("**Gerekli yetkiye sahip değilsin.**").then(m => m.delete({timeout: 5000}));
   if (!uye) return msg.channel.send("**Bir üye etiketlemelisin.**").then(m => m.delete({ timeout: 5000 }));
   if (author.roles.highest.position <= uye.roles.highest.position) return msg.channel.send("**Belirttiğin kişi senden üstün veya onunla aynı yetkidesin!**").then(x => x.delete({timeout: 5000}));
   if (!uye.voice.channel) return msg.channel.send("**Etiketlediğin üye bir sesli kanalında bulunmuyor.**").then(mj => mj.delete({ timeout: 5000 }));

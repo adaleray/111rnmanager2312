@@ -1,21 +1,28 @@
 module.exports.help = { name: "voiceStateUpdate" };
 
-module.exports.event = (oldState, newState, db = require("quick.db")) => {
-  if((!oldState.channel && newState.channel) || (oldState.channel && newState.channel)) {
-    let data = db.get("tempsmute") || [{id: null, kalkmaZamani: null}];
-    let member = newState.member;
-    if(!member) return;
-    if (data.some(d => d.id == member.id)){
-      let d = data.find(x => x.id == member.id);
-      if(Date.now() >= d.kalkmaZamani){
-        data = data.filter(d => d.id != member.id);
-        member.roles.remove("721069802784948247");
-        uye.voice.setMute(false)
-        cdb.set("tempsmute", data);
-      } else if(member.voice.channel && !member.voice.serverMute){
-        member.roles.add("721069802784948247");
-        uye.voice.setMute(true)
-      }
-    }
+class VoiceMuteChecker {
+  constructor(oldState, newState, db) {
+    this.oldState = oldState;
+    this.newState = newState;
+    this.db = db;
   }
-};
+  check() {
+    if ((!this.oldState.channel && this.newState.channel) || (this.oldState.channel && this.newState.channel)) {
+      let vmuted = this.db.get(`vmute_${this.newState.guild.id}`) || [{id: null, kalkmaZamani: null}];
+      let uye = this.newState.member;
+      if (!uye) return null;
+      if (vmuted.some(d => d.id == uye.id)){
+        let d = vmuted.find(x => x.id == uye.id);
+        if (Date.now() >= d.kalkmaZamani){
+          vmuted = vmuted.filter(d => d.id != uye.id);
+          uye.voice.setMute(false);
+          this.db.set(`vmute_${this.newState.guild.id}`, vmuted);
+        } else if (uye.voice.channel && !uye.voice.serverMute) {
+          uye.voice.setMute(true);
+        };
+      };
+    };
+  }
+}
+
+module.exports.event = (oldState, newState, db = require("quick.db")) => new VoiceMuteChecker(oldState, newState, db).check();
