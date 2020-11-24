@@ -1,4 +1,12 @@
-class Login { constructor(client) { this.client = client; } log(guild) { this.client.user.setStatus("idle"); console.log("(" +this.client.user.username +") adlı hesapta [" +guild.name +"] adlı sunucuda giriş yapıldı."); } }
+class Login {
+  constructor(client) {
+    this.client = client;
+  }
+  log(guild) {
+    this.client.user.setStatus("idle");
+    console.log("("+this.client.user.username +") adlı hesapta [" +guild.name +"] adlı sunucuda giriş yapıldı.");
+  }
+}
 
 class ChatEdit {
   constructor(client, sunucu, chat, sncIsim, tagrolIsim, tag) {
