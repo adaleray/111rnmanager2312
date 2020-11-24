@@ -13,7 +13,7 @@ module.exports.operate = async ({client, msg, args, author, uye, cfg, db}) => {
     await uye.roles.add(cfg.roles.kız).catch();
     await uye.setNickname(`${tag} ${nick}`).catch();
     await msg.channel.send(client.duzembed(`**${uye} adlı üyeye başarıyla <@&${cfg.roles.kız[0]}> rolü verildi.**`)).catch();
-    db.push(`isimler_${uye.id}`, `**${tag} ${nick}** - (<@&${cfg.roles.kız[0]}>)`);
+    db.push(`isimler_${uye.id}`, `\`${tag} ${nick}\` - (<@&${cfg.roles.kız[0]}>)`);
     db.add(`teyit.${author.id}.kiz`, 1);
     
   } else {
