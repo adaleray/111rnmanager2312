@@ -1,6 +1,5 @@
-module.exports.operate = async ({client, msg, args, author, uye}) => {
-  
-  if (!author.permissions.has("ADMINISTRATOR")) return msg.channel.send('**Gerekli yetkiye sahip değilsin.**').then(m => m.delete({ timeout: 3000 }));
+module.exports.operate = async ({client, msg, args, author, uye, cfg}) => {
+  if (!author.roles.cache.get(cfg.roles.transport) && !author.permissions.has("ADMINISTRATOR")) return msg.channel.send('**Gerekli yetkiye sahip değilsin.**').then(m => m.delete({ timeout: 3000 }));
   if (!uye) return msg.channel.send("**Bir üye etiketlemelisin.**").then(m => m.delete({ timeout: 3000 }));
   if (!uye.voice.channel) return msg.channel.send("**Etiketlediğin üye bir ses kanalında bulunmuyor.**").then(m => m.delete({ timeout: 3000 }));
   if (!args[1]) {
