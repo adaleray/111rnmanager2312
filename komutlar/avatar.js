@@ -4,13 +4,15 @@ module.exports.operate = ({client, msg, args}) => {
   let avatar = kullanici.avatarURL({ dynamic: true, size: 2048 });
   msg.channel.send({
     embed: {
-      author: { name: kullanici.tag, avatar },
+      author: { name: kullanici.tag, icon_url: avatar },
+      description: `[Resim Adresi](${avatar})`,
       footer: {
         text: `${msg.member.displayName} tarafından istendi.`,
         icon_url: msg.author.avatarURL({ dynamic: true })
       },
-      description: `[Resim Adresi](${avatar})`,
-      image: avatar
+      image: { url: avatar },
+      timestamp: new Date(),
+      color: client.favoriRenkler[Math.floor(Math.random() * client.favoriRenkler.length)]
     }
   });
 };
