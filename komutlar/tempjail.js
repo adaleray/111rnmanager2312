@@ -11,12 +11,12 @@ module.exports.operate = async ({client, msg, args, author, uye, cfg, db}) => {
   const sicil = db.get(`sicil_${uye.id}`);
   if (!uye.roles.cache.get(cfg.roles.jail)) {
     if (!sicil) db.set(`sicil_${uye.id}`, []);
-    if (!db.get(`tempjail_${msg.guild.id}`)) db.set(`tempjail_${msg.guild.id}`, []);
+    if (!db.get(`tempj_${msg.guild.id}`)) db.set(`tempj_${msg.guild.id}`, []);
     await uye.roles.set(uye.roles.cache.has(cfg.roles.booster) ? [cfg.roles.jail, cfg.roles.booster] : [cfg.roles.jail]).catch();
     await msg.channel.send(client.nrmlembed(`${uye} adlı üye ${author} tarafından **${reason}** sebebiyle jaile atıldı.`)).then(m => m.delete({ timeout: 5000})).catch();
     await db.push(`sicil_${uye.id}`, { yetkili: author.id, tip: "tempjail", sebep: reason, zaman: Date.now() });
     await db.add(`jailAtma_${author.id}`, 1);
-    await db.push(`tempjail_${msg.guild.id}`, { id: uye.id, kalkmaZamani: Date.now() + ms(zaman) });
+    await db.push(`tempj_${msg.guild.id}`, { id: uye.id, kalkmaZamani: Date.now() + ms(zaman) });
     if (uye.voice.channel) uye.voice.kick().catch();
   } else {
     function GaripBirAdamımEvet(r, u) { return [evet, hayir].includes(r.emoji.name) && u.id === author.id };
