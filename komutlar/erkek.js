@@ -2,8 +2,9 @@ module.exports.operate = async ({client, msg, args, author, uye, cfg, db}) => {
   if (!author.roles.cache.get(cfg.roles.botc) && !author.permissions.has("MANAGE_ROLES")) return msg.channel.send("**Gerekli yetkiye sahip değilsin.**").then(m => m.delete({ timeout: 5000 }));
   if (!uye) return msg.channel.send("**Bir üye etiketlemelisin.**").then(msj => msj.delete({timeout: 5000 }));
   const isimler = db.get(`isimler_${uye.id}`);
+  const topTeyit = db.get(`topteyit_${msg.guild.id}`);
   if (!isimler) db.set(`isimler_${uye.id}`, []);
-  
+  if (!topTeyit) db.set(`topteyit_${msg.guild.id}`, []);
   if (uye.roles.cache.get(cfg.roles.unregister)) {
     const nick = args.slice(1).join(" | ");
     const tag = uye.user.username.includes(cfg.tag.taglıTag) ? cfg.tag.taglıTag : (cfg.tag.tagsızTag === "" ? cfg.tag.taglıTag : cfg.tag.tagsızTag);

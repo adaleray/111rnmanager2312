@@ -15,3 +15,16 @@ require("./beko/functions.js")(client, cfg);
 require("./beko/load.js")(fs, client);
 require("./beko/commandHandler.js")(fs, client);
 require("./beko/login.js")(client, cfg);
+
+/*var x = [{
+  id: "x",
+  teyit: 10
+},
+{
+  id: "x",
+  teyit: 30
+}];
+
+var y = Object.keys(x);
+var z = x.sort((a, b) => b.teyit - a.teyit)
+z.map((value, index) => console.log(index + 1+".", value.teyit));*/
