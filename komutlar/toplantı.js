@@ -1,7 +1,6 @@
 module.exports.operate = async ({client, msg, args, author, cfg}) => {
   const evet = "✅";
   const hayir = "❌";
-  function onlarFilterBenBeko(r, u) { return [evet, hayir].includes(r.emoji.name) && u.id === author.id };
   if (!cfg.sahipler.includes(author.id)) return;
   if (!author.voice.channel) return msg.channel.send("**Bu komutu kullanmak için bir kanalda olman gerek.**").then(msj => msj.delete({ timeout: 5000 }));
   let tip = args[0];
@@ -15,9 +14,47 @@ module.exports.operate = async ({client, msg, args, author, cfg}) => {
   } else if (tip === "katıldı") {
     let tip2 = args[1];
     if (["dağıt", "ver"].includes(tip2)) {
-      msg.channel.send({})
+      function onlarFilterBenBeko(r, u) { return [evet, hayir].includes(r.emoji.name) && u.id === author.id };
+      var katildi = msg.guild.roles.cache.get(args[2]) || msg.mentions.roles.first();
+      if (!katildi) return msg.channel.send("**Komut kullanımı:**`.toplantı katıldı (dağıt\ver) (<@rol>\rolid)`").then(msj => msj.delete({ timeout: 5000 }));
+      var ytler = yetkililer.filter(yetkili => yetkili.voice.channel && msg.guild.members.cache.get(yetkili.id).voice.channel.id === author.voice.channel.id);
+      if (ytler.size === 0) return msg.channel.send("**Seste çekilecek yetkili bulunmuyor.**").then(msj => msj.delete({ timeout: 5000 }));
+      msg.channel.send({embed:{description:` \`${author.voice.channel.name}\` adlı kanaldaki herkese katıldı permini vermek istiyor musun?`, color: client.favoriRenkler[Math.floor(Math.random() * client.favoriRenkler.length)], timestamp: new Date()}}).then(async msj => {
+        await msj.react(evet);
+        await msj.react(hayir);
+        msj.awaitReactions(onlarFilterBenBeko, { max: 1, time: client.getDate(15, "saniye"), errors:["time"]}).then(async collected => {
+          let cvp = collected.first();
+          if (cvp.emoji.name === evet) {
+            await msg.channel.send(`**Başarıyla \`${ytler.size}\` kişiye katıldı permi dağıtıyorum.**`).catch(err => msg.channel.send(err.message));
+            ytler.map(y => y.roles.add(katildi.id).catch());
+          } else {
+            await msj.delete().catch();
+            await msg.delete().catch();
+            msg.channel.send(`**Komut başarıyla iptal edildi.**`).then(msj => msj.delete({ timeout: 5000 }));
+          };
+        }).catch(err => [msj.delete(), msg.delete()]);;
+      });
     } else if (["al", "topla"].includes(tip2)) {
-      
+      function onlarFilterBenBeko(r, u) { return [evet, hayir].includes(r.emoji.name) && u.id === author.id };
+      var katildi = msg.guild.roles.cache.get(args[2]) || msg.mentions.roles.first();
+      if (!katildi) return msg.channel.send("**Komut kullanımı:**`.toplantı katıldı (dağıt\ver) (<@rol>\rolid)`").then(msj => msj.delete({ timeout: 5000 }));
+      var ytler = yetkililer.filter(yetkili => yetkili.voice.channel && msg.guild.members.cache.get(yetkili.id).voice.channel.id === author.voice.channel.id);
+      if (ytler.size === 0) return msg.channel.send("**Seste çekilecek yetkili bulunmuyor.**").then(msj => msj.delete({ timeout: 5000 }));
+      msg.channel.send({embed:{description:` \`${author.voice.channel.name}\` adlı kanaldaki herkese katıldı permini vermek istiyor musun?`, color: client.favoriRenkler[Math.floor(Math.random() * client.favoriRenkler.length)], timestamp: new Date()}}).then(async msj => {
+        await msj.react(evet);
+        await msj.react(hayir);
+        msj.awaitReactions(onlarFilterBenBeko, { max: 1, time: client.getDate(15, "saniye"), errors:["time"]}).then(async collected => {
+          let cvp = collected.first();
+          if (cvp.emoji.name === evet) {
+            await msg.channel.send(`**Başarıyla \`${ytler.size}\` kişiye katıldı permi dağıtıyorum.**`).catch(err => msg.channel.send(err.message));
+            ytler.map(y => y.roles.add(katildi.id).catch());
+          } else {
+            await msj.delete().catch();
+            await msg.delete().catch();
+            msg.channel.send(`**Komut başarıyla iptal edildi.**`).then(msj => msj.delete({ timeout: 5000 }));
+          };
+        }).catch(err => [msj.delete(), msg.delete()]);;
+      })
     };
   };
 };
