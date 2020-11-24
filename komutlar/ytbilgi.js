@@ -3,7 +3,7 @@ module.exports.operate = async ({client, msg, args, author, uye, cfg, db}) => {
   var kullanici = author || uye;
   
   const erkek = db.get(`teyit.${kullanici.id}.erkek`) || 0;
-  const kız = db.get(`karıTeyit_${kullanici.id}`) || 0;
+  const kız = db.get(`teyit.${kullanici.id}.kiz`) || 0;
   const jail = db.get(`jailAtma_${kullanici.id}`) || 0;
   const mute = db.get(`muteAtma_${kullanici.id}`) || 0;
   const ban = db.get(`banAtma_${kullanici.id}`) || 0;
