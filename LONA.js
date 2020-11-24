@@ -11,7 +11,7 @@ client.cmuteliler = new Set();
 client.locked = new Set();
 global.client = client;
 
-require("./data/functions.js")(client, cfg);
-require("./data/load.js")(fs, client);
-require("./data/commandHandler.js")(fs, client);
-require("./data/login.js")(client, cfg);
+require("./beko/functions.js")(client, cfg);
+require("./beko/load.js")(fs, client);
+require("./beko/commandHandler.js")(fs, client);
+require("./beko/login.js")(client, cfg);
