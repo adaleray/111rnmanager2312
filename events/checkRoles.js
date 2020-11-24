@@ -20,6 +20,10 @@ class CheckRoles {
       };
     };
   }
+  
+  tempJailler() {
+    
+  }
   yasakliTagKontrol() {
     var yasakliTagKontrol = this.db.get(`yasakliTagKontrol_${this.sunucu}`) || "kapali";
     if (yasakliTagKontrol === "kapali") return;
