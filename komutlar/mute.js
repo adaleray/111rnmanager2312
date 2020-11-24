@@ -2,7 +2,6 @@ const ms = require("ms");
 module.exports.operate = async ({client, msg, args, author, uye, cfg, db}) => {
   const evet = "✅";
   const hayir = "❌";
-
   if (!author.roles.cache.get(cfg.roles.muteH) && !author.permissions.has("MANAGE_ROLES")) return msg.channel.send("**Gerekli yetkiye sahip değilsin.**").then(m => m.delete({ timeout: 5000 }));
   if (!uye) return msg.channel.send("**Bir üye etiketlemelisin.**").then(m => m.delete({ timeout: 5000 }));
   const zaman = args[1];
