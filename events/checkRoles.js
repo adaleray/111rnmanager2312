@@ -20,9 +20,18 @@ class CheckRoles {
       };
     };
   }
-  
   tempJailler() {
-    
+    const tempjailler = this.db.get(`tempmute_${this.sunucu}`) || [];
+    if (tempjailler.length < 1) return;
+    for (let jail of tempjailler) {
+      const uye = this.client.guilds.cache.get(this.sunucu).members.cache.get(jail.id);
+      if (Date.now() >= jail.kalkmaZamani) {
+        this.db.set(`tempmute_${this.sunucu}`, tempjailler.filter(x => x.id !== jail.id));
+        if (uye && uye.roles.cache.get(this.cfg.roles.jail)) uye.roles.set(uye.roles.cache.get(this.cfg.booster))
+      } else {
+        if (uye && !uye.roles.cache.get(this.cfg.roles.jail)) uye.roles.set(uye.roles.cache.get(this.cfg.booster) ? [this.cfg.booster, this.cfg.jail] : [this.cfg.jail]);
+      };
+    };
   }
   yasakliTagKontrol() {
     var yasakliTagKontrol = this.db.get(`yasakliTagKontrol_${this.sunucu}`) || "kapali";
@@ -39,6 +48,7 @@ class CheckRoles {
 }
 
 module.exports.event = (client = global.client, db = require("quick.db"), cfg = require("../config.json")) => {
-  setInterval(() => new CheckRoles(client, db, cfg.sunucu, cfg).chatMuteler(), client.getDate(2, "dakika"));
-  setInterval(() => new CheckRoles(client, db, cfg.sunucu, cfg).yasakliTagKontrol(), client.getDate(40, "dakika"));
+  setInterval(() => new CheckRoles(client, db, cfg.sunucu, cfg).chatMuteler(), client.getDate(3, "dakika"));
+  setInterval(() => new CheckRoles(client, db, cfg.sunucu, cfg).yasakliTagKontrol(), client.getDate(37, "dakika"));
+  setInterval(() => new CheckRoles(client, db, cfg.sunucu, cfg).tempJailler(), client.getDate(5, "saat"));
 };
