@@ -10,11 +10,11 @@ module.exports.operate = async ({client, msg, args, author, uye, cfg, db}) => {
   const sicil = db.get(`sicil_${uye.id}`);
   if (!sicil) db.set(`sicil_${uye.id}`, []);
   if (!db.get(`vmute_${msg.guild.id}`)) db.set(`vmute_${msg.guild.id}`, []);
-  await msg.channel.send(client.nrmlembed(`${uye} adlı üye ${author} tarafından **${reason}** sebebiyle \`${zaman}\` süresince **sesli kanallarda** susturuldu.`)).then(m => m.delete({ timeout: 5000 })).catch();
-  await uye.voice.serverMute(true).catch();
-  await db.push(`sicil_${uye.id}`, { yetkili: author.id, tip: "voicemute", sebep: reason, zaman: Date.now() });
-  await db.add(`vMute_${author.id}`, 1);
+  await uye.voice.setMute(true).catch();
+  msg.channel.send(client.nrmlembed(`${uye} adlı üye ${author} tarafından **${reason}** sebebiyle \`${zaman}\` süresince **sesli kanallarda** susturuldu.`)).then(m => m.delete({ timeout: 5000 }));
   db.push(`vmute_${msg.guild.id}`, { id: uye.id, kalkmaZamani: Date.now() + ms(zaman) });
+  db.push(`sicil_${uye.id}`, { yetkili: author.id, tip: "voicemute", sebep: reason, zaman: Date.now() });
+  db.add(`vMute_${author.id}`, 1);
 };
 
 module.exports.help = {

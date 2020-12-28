@@ -1,5 +1,5 @@
-module.exports.operate = ({msg, author, client}) => {
-  if (!author.permissions.has("MANAGE_ROLES")) return;
+module.exports.operate = ({msg, author, client, cfg}) => {
+  if (!author.roles.cache.get(cfg.roles.botc) && !author.permissions.has("MANAGE_ROLES")) return;
   let sesli = 0;
   msg.guild.channels.cache.filter(c => c.type === "voice").map(k => {
     sesli += k.members.size

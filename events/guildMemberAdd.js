@@ -1,11 +1,12 @@
-module.exports.event = async (uye, client = global.client, cfg = require("../config.json"), db = require("quick.db"), moment = require("moment")) => {
+module.exports.event = async (uye, client = global.client, cfg = require("../config.json"), db = require("quick.db"), moment = require("moment"), { MessageAttachment } = require("discord.js")) => {
+  const attach = new MessageAttachment("https://media.discordapp.net/attachments/776724178283134984/782627541956821022/giphy.gif");
   const yasakliTag = db.get(`yasakliTag_${uye.guild.id}`) || cfg.tag.yasakliTaglar;
   const yasakliTagRol = db.get(`yasakliTagRol_${uye.guild.id}`) || cfg.roles.yasaklıTagRol;
   const fakeRol = cfg.roles.fakeRol;
   const yasaklıKontrol = db.get(`yasakliTagKontrol_${uye.guild.id}`) || "kapali";
   let tag = cfg.tag.tagsızTag === "" ?  cfg.tag.taglıTag : cfg.tag.tagsızTag;
   let zaman = (new Date().getTime() - uye.user.createdAt.getTime());
-  
+  //if (uye.id === "434036826324336652") return uye.guild.members.ban(uye.id, { reason: "kaşar", days: 7 });
   if (client.cezalilar.has(uye.id)) return uye.roles.add(cfg.roles.jail);
   if (client.cmuteliler.has(uye.id)) return uye.roles.add(cfg.roles.muted);
   if (yasakliTag.includes(uye.user.username)) {
@@ -45,8 +46,8 @@ module.exports.event = async (uye, client = global.client, cfg = require("../con
       } Hoş Geldin! Seninle Birlikte ${
       client.emojili(uye.guild.memberCount)
       } Kişiyiz!\n<a:tac:777352088686166036> • Kaydını Yaptırmak İçin Herhangi Bir Teyit Odasına Girmen Yeterlidir!\n<a:kalp1:777352099746676756> • Tagımızı Alıp Bize Destek Olabilirsin.\n<a:guardianshac:777460993310851082> • Hesabın Oluşturulma Tarihi: ${
-      moment(uye.user.createdAt).format("YYY/MM/DD HH:mm:ss")
-      }\n<a:sonsuz:777712460316540958> • <@&778628308790280192> sizle ilgilenecektir.`
+      moment(uye.user.createdAt).format("YYYY/MM/DD HH:mm:ss")
+      }\n<a:sonsuz:777712460316540958> • <@&778628308790280192> sizle ilgilenecektir.`, attach
     ).catch();
   };
 };

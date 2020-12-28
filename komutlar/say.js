@@ -1,5 +1,4 @@
 module.exports.operate = async ({msg, author, args, client, cfg, db}) => {
-  if (!author.permissions.has("MANAGE_ROLES")) return;
   let sayi = 0;
   const sayTürü = db.get(`sayTuru_${msg.guild.id}`) || "emojisiz";
   const uyeSayisi = msg.guild.memberCount;
@@ -11,6 +10,7 @@ module.exports.operate = async ({msg, author, args, client, cfg, db}) => {
     sayi += k.members.size
   });
   if (!type) {
+  if (!author.roles.cache.get(cfg.roles.botc) && !author.permissions.has("MANAGE_ROLES")) return;
     if (sayTürü === "emojisiz") {
       msg.channel.send({
         embed: {
@@ -68,6 +68,7 @@ module.exports.operate = async ({msg, author, args, client, cfg, db}) => {
     } else if (type === "ayarla") {
       let ayar = args[1];
       if (!ayar) return;
+      if (!author.permissions.has("MANAGE_ROLES")) return;
       if (ayar === "emojili") {
         if (sayTürü === "emojili") return msg.channel.send("**Say türü zaten emojili.**").then(m => m.delete({ timeout: 5000 }));
         await db.set(`sayTuru_${msg.guild.id}`, "emojili");

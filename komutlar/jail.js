@@ -1,6 +1,7 @@
 module.exports.operate = async ({client, msg, args, author, uye, cfg, db}) => {
   const evet = "✅";
   const hayir = "❌";
+  const kanal = msg.guild.channels.cache.find(c => c.name === "jail-log");
   if (!author.permissions.has("MANAGE_ROLES") && !author.roles.cache.get(cfg.roles.jailH)) return msg.channel.send("**Gerekli yetkiye sahip değilsin.**").then(m => m.delete({timeout: 5000}));
   if (!uye) return msg.channel.send("**Bir üye etiketlemelisin.**").then(m => m.delete({ timeout: 5000 }));
   if (author.roles.highest.position <= uye.roles.highest.position) return msg.channel.send("**Belirttiğin kişi senden üstün veya onunla aynı yetkidesin!**").then(x => x.delete({timeout: 5000}));
@@ -13,6 +14,7 @@ module.exports.operate = async ({client, msg, args, author, uye, cfg, db}) => {
     await db.push(`sicil_${uye.id}`, { yetkili: author.id, tip: "jail", sebep: reason, zaman: Date.now() });
     await db.add(`jailAtma_${author.id}`, 1);
     if (uye.voice.channel) uye.voice.kick().catch();
+    if (kanal) kanal.send(client.nrmlembed(`${uye} adlı üye ${author} tarafından **${reason}** sebebiyle jaile atıldı.`));
   } else {
     function GaripBirAdamımEvet(r, u) { return [evet, hayir].includes(r.emoji.name) && u.id === author.id };
     await msg.channel.send({embed:{author:{icon_url: msg.guild.iconURL({dynamic:true}),name:msg.guild.name},description:`**${uye} adlı üye zaten jailde. Eğer işlemi onaylarsan üyeyi jailden çıkartacağım.**`, timestamp:new Date(),color: client.favoriRenkler[Math.floor(Math.random() * client.favoriRenkler.length)]}}).then(async m => {
@@ -26,6 +28,7 @@ module.exports.operate = async ({client, msg, args, author, uye, cfg, db}) => {
           await msg.channel.send(client.nrmlembed(`**${uye} adlı üye başarıyla jailden çıkarıldı.**`)).catch();
           await m.delete().catch();
           await msg.delete().catch();
+          if (kanal) kanal.send(client.nrmlembed(`**${uye} ${author} adlı üye tarafından jailden çıkartıldı.**`));
         } else {
           m.delete();
           msg.delete();

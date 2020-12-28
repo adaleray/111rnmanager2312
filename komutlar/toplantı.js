@@ -17,7 +17,7 @@ module.exports.operate = async ({client, msg, args, author, cfg}) => {
       function onlarFilterBenBeko(r, u) { return [evet, hayir].includes(r.emoji.name) && u.id === author.id };
       var katildi = msg.guild.roles.cache.get(args[2]) || msg.mentions.roles.first();
       if (!katildi) return msg.channel.send("**Komut kullanımı:**`.toplantı katıldı (dağıt\ver) (<@rol>\rolid)`").then(msj => msj.delete({ timeout: 5000 }));
-      var ytler = yetkililer.filter(yetkili => yetkili.voice.channel && msg.guild.members.cache.get(yetkili.id).voice.channel.id === author.voice.channel.id);
+      var ytler = yetkililer.filter(yetkili => yetkili.voice.channel && msg.guild.members.cache.get(yetkili.id).voice.channel.id === author.voice.channel.id && !yetkili.roles.cache.get(katildi.id));
       if (ytler.size === 0) return msg.channel.send("**Seste yetki verilecek yetkili bulunmuyor.**").then(msj => msj.delete({ timeout: 5000 }));
       msg.channel.send({embed:{description:` \`${author.voice.channel.name}\` adlı kanaldaki herkese katıldı permini vermek istiyor musun?`, color: client.favoriRenkler[Math.floor(Math.random() * client.favoriRenkler.length)], timestamp: new Date()}}).then(async msj => {
         await msj.react(evet);

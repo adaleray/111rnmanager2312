@@ -48,7 +48,7 @@ class CheckRoles {
 }
 
 module.exports.event = (client = global.client, db = require("quick.db"), cfg = require("../config.json")) => {
-  setInterval(() => new CheckRoles(client, db, cfg.sunucu, cfg).chatMuteler(), client.getDate(3, "dakika"));
+  setInterval(() => new CheckRoles(client, db, cfg.sunucu, cfg).chatMuteler(), client.getDate(1, "dakika"));
   setInterval(() => new CheckRoles(client, db, cfg.sunucu, cfg).yasakliTagKontrol(), client.getDate(37, "dakika"));
-  setInterval(() => new CheckRoles(client, db, cfg.sunucu, cfg).tempJailler(), client.getDate(1, "saat")+client.getDate(41, "dakika"));
+  setInterval(() => new CheckRoles(client, db, cfg.sunucu, cfg).tempJailler(), client.getDate(1, "dakika"));
 };

@@ -2,8 +2,8 @@ const { MessageEmbed } = require("discord.js");
 
 module.exports = (client, cfg) => {
   
-  client.favoriRenkler = new Array("#0b0067", "#4a0038", "#07052a", "#1f0524");
-  
+ client.favoriRenkler = new Array("#0b0067", "#4a0038", "#07052a", "#1f0524", "#FFDF00", "#00FFFF", "#0091CC", "#0047AB", "#384B77", "#ffffff", "#000000");  
+    
   client.duzembed = (message) => {
     return {
       embed: {
@@ -17,7 +17,7 @@ module.exports = (client, cfg) => {
     };
   };
   
-  client.toFlat = Object.defineProperty(Array.prototype, "flat", {
+  Object.defineProperty(Array.prototype, "flat", {
      value: (depth = 1) => {
        return Array.prototype.reduce((flat, toFlatten) => {
          return flat.concat(Array.isArray(toFlatten) && depth > 1 ? toFlatten.flat(depth - 1) : toFlatten);
@@ -33,30 +33,34 @@ module.exports = (client, cfg) => {
     return str;
   };
   
+  client.sayilariCevir = function(x) {
+    return x.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",");
+  };
+  
   client.beko = async (msg, rolID, veren, sunucu, tip, args, arr) => {
-  let author = msg.guild.member(msg.author);
-  let uye = msg.guild.member(msg.mentions.users.first()) || msg.guild.members.cache.get(args);
-  if (tip === "normal") {
-    if (!author.roles.cache.get(cfg.roles.yetkiliRoller.botc) && !author.permissions.has("MANAGE_ROLES")) return msg.channel.send("**Gerekli yetkiye sahip değilsin.**").then(m => m.delete({ timeout: 5000 }));
-    if (!uye) return msg.channel.send("**Bir üye etiketlemelisin.**").then(m => m.delete({ timeout: 5000 }));
-    if (uye.roles.cache.get(rolID)) {
-      await uye.roles.remove(rolID).catch();
-      await msg.channel.send(client.duzembed(`**${uye} adlı üyeden <@&${rolID}> rolü alındı.**`)).then(m => m.delete({ timeout: 5000 }));
-    } else {
-      await uye.roles.add(rolID).catch();
-      await msg.channel.send(client.duzembed(`**${uye} adlı üyeye <@&${rolID}> rolü verildi.**`)).then(m => m.delete({ timeout: 5000 }));
-    };
-  } else if (tip === "custom") {
-    if (!arr.includes(author.id)) return msg.channel.send("**Gerekli yetkiye sahip değilsin.**").then(m => m.delete({ timeout: 5000 }));
-    if (!uye) return msg.channel.send("**Bir üye etiketlemelisin.**").then(m => m.delete({ timeout: 5000 }));
-    if (uye.roles.cache.get(rolID)) {
-      await uye.roles.remove(rolID).catch();
-      await msg.channel.send(client.duzembed(`**${uye} adlı üyeden <@&${rolID}> rolü alındı.**`)).then(m => m.delete({ timeout: 5000 }));
-    } else {
-      await uye.roles.add(rolID).catch();
-      await msg.channel.send(client.duzembed(`**${uye} adlı üyeye <@&${rolID}> rolü verildi.**`)).then(m => m.delete({ timeout: 5000 }));
+    let author = msg.guild.member(msg.author);
+    let uye = msg.guild.member(msg.mentions.users.first()) || msg.guild.members.cache.get(args);
+    if (tip === "normal") {
+      if (!author.roles.cache.get(cfg.roles.yetkiliRoller.botc) && !author.permissions.has("MANAGE_ROLES")) return msg.channel.send("**Bu işlemi gerçekleştirmek için gerekli yetkiye sahip değilsin.**").then(m => m.delete({ timeout: 5000 }));
+      if (!uye) return msg.channel.send("**Bu işlemi gerçekleştirmek için bir üye etiketlemelisin.**").then(m => m.delete({ timeout: 5000 }));
+      if (uye.roles.cache.get(rolID)) {
+        await uye.roles.remove(rolID).catch();
+        await msg.channel.send(client.duzembed(`**${uye} adlı üyeden <@&${rolID}> rolü alındı.**`)).then(m => m.delete({ timeout: 5000 }));
+      } else {
+        await uye.roles.add(rolID).catch();
+        await msg.channel.send(client.duzembed(`**${uye} adlı üyeye <@&${rolID}> rolü verildi.**`)).then(m => m.delete({ timeout: 5000 }));
       };
-    };
+    } else if (tip === "custom") {
+      if (!arr.includes(author.id)) return msg.channel.send("**Bu işlemi gerçekleştirmek için gerekli yetkiye sahip değilsin.**").then(m => m.delete({ timeout: 5000 }));
+      if (!uye) return msg.channel.send("**Bu işlemi gerçekleştirmek için bir üye etiketlemelisin.**").then(m => m.delete({ timeout: 5000 }));
+      if (uye.roles.cache.get(rolID)) {
+        await uye.roles.remove(rolID).catch();
+        await msg.channel.send(client.duzembed(`**${uye} adlı üyeden <@&${rolID}> rolü alındı.**`)).then(m => m.delete({ timeout: 5000 }));
+      } else {
+        await uye.roles.add(rolID).catch();
+        await msg.channel.send(client.duzembed(`**${uye} adlı üyeye <@&${rolID}> rolü verildi.**`)).then(m => m.delete({ timeout: 5000 }));
+        };
+     };
   };
 
   client.getDate = (date, type) => {
@@ -86,6 +90,16 @@ module.exports = (client, cfg) => {
       }
     };
   };
+  
+    client.voicembed = (message) => {
+      return {
+        embed: {
+          description: message,
+          color: client.favoriRenkler[Math.floor(Math.random() * client.favoriRenkler.length)],
+          footer: { text: `${client.toDate(new Date())}`}
+        }
+      };
+    };
   
   client.banembed = (message) => {
     return {

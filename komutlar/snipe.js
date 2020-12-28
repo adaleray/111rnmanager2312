@@ -4,7 +4,7 @@ module.exports.operate = async ({client, msg, author, cfg, db}) => {
   let a = data.author;
   let content = data.content;
   let channel = data.kanal;
-  msg.channel.send({embed:{color:client.favoriRenkler[Math.floor(Math.random() * client.favoriRenkler.length)],timestamp:new Date(),description:`**En Son Silinen Mesaj Bilgileri:**\n\n\`Mesajı Atan Kişi:\` <@${a}> - **(${a})**\n\`Silindiği Kanal:\` <#${channel}> - **(${channel})**\n\`Mesajın İçeriği:\` **${content}**`}})
+  msg.channel.send({embed:{color:client.favoriRenkler[Math.floor(Math.random() * client.favoriRenkler.length)],timestamp:new Date(),description:`**Silinen Son Mesaj:**\n\n\`Mesajı Atan Kişi:\` <@${a}> - **(${a})**\n\`Silindiği Kanal:\` <#${channel}> - **(${channel})**\n\`Mesajın İçeriği:\` **${content}**`}})
 };
 
 module.exports.help = {

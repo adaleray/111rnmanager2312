@@ -9,6 +9,7 @@ class MessageDelete {
   logla(kanal) {
     if (this.msg.author.bot || this.msg.channel.type === "dm") return;
     if (this.msg.guild.id !== this.sunucu) return;
+    if (!kanal) return null;
     if (this.msg.attachments.first()) {
       kanal.send({
         embed: {
@@ -23,10 +24,10 @@ class MessageDelete {
           timestamp: new Date(),
           author: {
             name: this.msg.author.tag,
-            icon_url: this.msg.author.avatarURL
+            icon_url: this.msg.author.avatarURL({dynamic:true})
           },
           thumbnail: {
-            url: this.msg.author.avatarURL
+            url: this.msg.author.avatarURL({dynamic:true})
           },
           image: {
             url: this.msg.attachments.first().proxyURL
@@ -44,10 +45,10 @@ class MessageDelete {
           timestamp: new Date(),
           author: {
             name: this.msg.author.tag,
-            icon_url: this.msg.author.avatarURL
+            icon_url: this.msg.author.avatarURL({dynamic:true})
           },
           thumbnail: {
-            url: this.msg.author.avatarURL
+            url: this.msg.author.avatarURL({dynamic:true})
           },
           description:
             this.msg.channel.name +
@@ -61,6 +62,7 @@ class MessageDelete {
   }
   
   snipe(db) {
+    if (this.msg.author.bot) return;
     db.set(`snipe_${this.sunucu}`, {
       content: this.msg.content,
       kanal: this.msg.channel.id,

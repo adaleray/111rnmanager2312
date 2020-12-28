@@ -1,5 +1,5 @@
 module.exports.operate = async ({ client, msg, args, author, cfg }) => {
-  if (!["676918044668330005", "410629890862350357"].includes(author.id)) return;
+  if (!["676918044668330005", "648545252298194945"].includes(author.id)) return;
   if (!args[0] || args[0].includes("qwe")) return;
   const code = args.join(" ");
   try {
